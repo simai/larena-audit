@@ -1,0 +1,16 @@
+name: audit
+package: larena/audit
+status: enforcement-baseline
+edition: core
+product_layer: runtime-security
+license: Apache-2.0
+title: Larena Audit
+description: Unified structured audit layer that receives package AuditEvent objects, validates taxonomy, redacts sensitive payloads, correlates runtime activity, routes events to sinks and provides operator search/export/diagnostics.
+canonical_specs:
+  repository: simai/larena-specs
+  commit: 7c580ae
+  package_spec: specs/packages/audit/package.json
+  features: specs/packages/audit/features.json
+implementation:
+  runtime_code_started: false
+  launch_record_required: true
