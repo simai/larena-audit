@@ -20,7 +20,9 @@
     "docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/commands.md",
     "docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/file-map.json",
     "docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/deviations.json",
-    "docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/graph-sync-proposal.json"
+    "docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/graph-sync-proposal.json",
+    ".github/workflows/larena-package-ci.yml",
+    ".githooks/pre-push"
   ],
   "forbidden_files": [
     "src/*",
