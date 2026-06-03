@@ -3,7 +3,7 @@
   "package": "larena/audit",
   "batch": "runtime-security/batch-1/audit",
   "status": "no_canonical_graph_change_requested",
-  "source_commit": null,
+  "source_commit": "43b72c8",
   "findings": [
     {
       "type": "implementation_evidence",
