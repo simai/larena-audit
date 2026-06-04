@@ -1,6 +1,6 @@
 {
   "name": "larena/audit",
-  "description": "Unified structured audit layer that receives package AuditEvent objects, validates taxonomy, redacts sensitive payloads, correlates runtime activity, routes events to sinks and provides operator search/export/diagnostics.",
+  "description": "Larena Audit: Unified structured audit layer that receives package AuditEvent objects, validates taxonomy, redacts sensitive payloads, correlates runtime activity, routes events to sinks and provides operator search/export/diagnostics.",
   "type": "library",
   "license": "Apache-2.0",
   "authors": [
@@ -22,13 +22,16 @@
       "Larena\\Audit\\Tests\\": "tests/"
     }
   },
+  "require-dev": {
+    "phpstan/phpstan": "^2.0"
+  },
   "scripts": {
-    "test": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php",
-    "test:unit": "@test",
-    "lint": "find src tests -name '*.php' -print0 | xargs -0 -n1 php -l",
-    "analyse": "find src tests -name '*.php' -print0 | xargs -0 -n1 php -l",
-    "validate:larena": "@php -r 'foreach ([\"module.yaml\", \"src/Contracts/AuditEvent.php\", \"src/Contracts/AuditEventDescriptor.php\", \"src/Contracts/AuditSink.php\", \"src/Contracts/AuditRedactor.php\", \"src/Enums/AuditSeverity.php\", \"src/Enums/AuditRetentionClass.php\"] as $file) { if (!is_file($file)) { fwrite(STDERR, \"Missing {$file}\\n\"); exit(1); } } echo \"Larena audit contract skeleton is valid.\\n\";'",
-    "evidence:check": "test -f docs/project-management/evidence/runtime-security/batch-0/audit-repository-transition/README.md && test -f docs/project-management/evidence/runtime-security/batch-0/audit-repository-transition/file-map.json && test -f docs/project-management/evidence/runtime-security/batch-0/audit-repository-transition/graph-sync-proposal.json && test -f docs/project-management/evidence/runtime-security/batch-0/audit-repository-transition/independent-review.md && test -f docs/project-management/evidence/runtime-security/batch-1/audit/implementation-summary.md && test -f docs/project-management/evidence/runtime-security/batch-1/audit/tests.md && test -f docs/project-management/evidence/runtime-security/batch-1/audit/smoke.md && test -f docs/project-management/evidence/runtime-security/batch-1/audit/file-map.json && test -f docs/project-management/evidence/runtime-security/batch-1/audit/deviations.json && test -f docs/project-management/evidence/runtime-security/batch-1/audit/graph-sync-proposal.json && test -f docs/project-management/evidence/runtime-security/batch-1/audit/code-review-feedback.md && test -f docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/README.md && test -f docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/commands.md && test -f docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/file-map.json && test -f docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/deviations.json && test -f docs/project-management/evidence/runtime-security/batch-2/audit-scope-check/graph-sync-proposal.json",
+    "test": "php scripts/test-placeholder.php",
+    "test:unit": "php scripts/test-placeholder.php",
+    "lint": "php scripts/lint.php",
+    "analyse": "php scripts/analyse.php",
+    "validate:larena": "php scripts/validate-larena-package.php",
+    "evidence:check": "php scripts/check-evidence.php",
     "scope:check": "php tools/larena-scope-check.php",
     "quality:gate": [
       "@validate:larena",

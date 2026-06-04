@@ -1,9 +1,7 @@
 # Larena Audit
 
-Package: `larena/audit`
+Unified structured audit layer that receives package AuditEvent objects, validates taxonomy, redacts sensitive payloads, correlates runtime activity, routes events to sinks and provides operator search/export/diagnostics.
 
-Status: repository enforcement baseline. Runtime implementation has not started.
+This repository is currently a clean Larena pre-codegen baseline. Package implementation code has not started.
 
-Canonical specs: `simai/larena-specs` at `7c580ae`.
-
-This repository is an implementation and evidence space. It must not redefine package scope outside Larena Specs.
+Canonical specifications are in `simai/larena-specs`.
