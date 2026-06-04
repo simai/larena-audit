@@ -1,0 +1,10 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "package": "larena/audit",
+  "batch": "runtime-security/batch-2/audit-in-memory-runtime",
+  "status": "no_canonical_graph_change_requested",
+  "canonical_update_allowed": false,
+  "must_not_apply_automatically": true,
+  "summary": "In-memory audit redaction and sink runtime implementation. No canonical graph change is requested."
+}
+

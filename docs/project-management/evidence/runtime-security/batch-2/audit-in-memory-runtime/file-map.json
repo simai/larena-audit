@@ -1,0 +1,29 @@
+{
+  "schema": "larena.evidence_file_map.v1",
+  "package": "larena/audit",
+  "batch": "runtime-security/batch-2/audit-in-memory-runtime",
+  "changed_files": [
+    ".larena/launch-context.json",
+    "composer.json",
+    "src/Runtime/DefaultAuditRedactor.php",
+    "src/Runtime/InMemoryAuditSink.php",
+    "src/Runtime/AuditEventPipeline.php",
+    "tests/Unit/AuditRedactorRuntimeTest.php",
+    "tests/Unit/AuditEventPipelineTest.php",
+    "tests/Unit/AuditEventPipelineFailsClosedTest.php",
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/README.md",
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/implementation-summary.md",
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/tests.md",
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/smoke.md",
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/file-map.json",
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/deviations.json",
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/graph-sync-proposal.json",
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md"
+  ],
+  "runtime_files_changed": [
+    "src/Runtime/DefaultAuditRedactor.php",
+    "src/Runtime/InMemoryAuditSink.php",
+    "src/Runtime/AuditEventPipeline.php"
+  ]
+}
+
