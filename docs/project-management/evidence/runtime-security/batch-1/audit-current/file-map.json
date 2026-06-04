@@ -1,0 +1,30 @@
+{
+  "schema": "larena.package_batch_file_map.v1",
+  "package": "larena/audit",
+  "launch_record_ref": "specs/implementation-planning/launch-records/audit-batch-1-contract-skeletons-current.json",
+  "allowed_changed_files": [
+    ".larena/launch-context.json",
+    "phpstan.neon.dist",
+    "scripts/lint.php",
+    "scripts/test-placeholder.php",
+    "scripts/validate-larena-package.php",
+    "src/Contracts/AuditEvent.php",
+    "src/Contracts/AuditEventDescriptor.php",
+    "src/Contracts/AuditSink.php",
+    "src/Contracts/AuditRedactor.php",
+    "src/Enums/AuditSeverity.php",
+    "src/Enums/AuditRetentionClass.php",
+    "tests/Unit/AuditEventContractTest.php",
+    "tests/Unit/AuditFailsClosedTest.php"
+  ],
+  "evidence_files": [
+    "docs/project-management/evidence/runtime-security/batch-1/audit-current/README.md",
+    "docs/project-management/evidence/runtime-security/batch-1/audit-current/implementation-summary.md",
+    "docs/project-management/evidence/runtime-security/batch-1/audit-current/tests.md",
+    "docs/project-management/evidence/runtime-security/batch-1/audit-current/smoke.md",
+    "docs/project-management/evidence/runtime-security/batch-1/audit-current/file-map.json",
+    "docs/project-management/evidence/runtime-security/batch-1/audit-current/deviations.json",
+    "docs/project-management/evidence/runtime-security/batch-1/audit-current/graph-sync-proposal.json",
+    "docs/project-management/evidence/runtime-security/batch-1/audit-current/code-review-feedback.md"
+  ]
+}

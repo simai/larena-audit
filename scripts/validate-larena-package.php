@@ -30,6 +30,7 @@ $specRef = is_file('.larena/spec-ref.json')
 $launchContext = is_file('.larena/launch-context.json')
     ? json_decode((string) file_get_contents('.larena/launch-context.json'), true, 512, JSON_THROW_ON_ERROR)
     : [];
+$codingStarted = ($launchContext['coding_started'] ?? false) === true;
 
 if (($specRef['canonical_update_allowed'] ?? null) !== false) {
     $errors[] = '.larena/spec-ref.json must keep canonical_update_allowed=false';
@@ -37,10 +38,6 @@ if (($specRef['canonical_update_allowed'] ?? null) !== false) {
 
 if (($launchContext['package'] ?? null) !== 'larena/audit') {
     $errors[] = '.larena/launch-context.json package must be larena/audit';
-}
-
-if (($launchContext['coding_started'] ?? null) !== false) {
-    $errors[] = 'coding_started must be false before a coding launch record.';
 }
 
 if (!str_starts_with((string) ($launchContext['evidence_path'] ?? ''), 'docs/project-management/evidence/')) {
@@ -52,8 +49,32 @@ if (!str_starts_with((string) ($launchContext['graph_sync_proposal_path'] ?? '')
 }
 
 foreach (['src', 'config', 'database', 'routes', 'resources', 'tests', 'lang'] as $runtimePath) {
-    if (is_dir($runtimePath)) {
+    if (is_dir($runtimePath) && !$codingStarted) {
         $errors[] = "{$runtimePath}/ is not allowed in this clean pre-codegen baseline commit.";
+    }
+}
+
+if ($codingStarted) {
+    $allowedCodingStatuses = [
+        'coding_started',
+        'contract_skeleton_review_passed',
+    ];
+
+    foreach ([
+        'src/Contracts/AuditEvent.php',
+        'src/Contracts/AuditEventDescriptor.php',
+        'src/Contracts/AuditSink.php',
+        'src/Contracts/AuditRedactor.php',
+        'src/Enums/AuditSeverity.php',
+        'src/Enums/AuditRetentionClass.php',
+    ] as $requiredContractFile) {
+        if (!is_file($requiredContractFile)) {
+            $errors[] = "Missing required contract launch file: {$requiredContractFile}";
+        }
+    }
+
+    if (!in_array(($launchContext['status'] ?? null), $allowedCodingStatuses, true)) {
+        $errors[] = 'launch-context status must be an allowed coding/review state when runtime files are present.';
     }
 }
 
@@ -64,4 +85,6 @@ if ($errors !== []) {
     exit(1);
 }
 
-echo "Larena Audit clean pre-codegen baseline is valid.\n";
+echo $codingStarted
+    ? "Larena Audit coding launch context is valid.\n"
+    : "Larena Audit clean pre-codegen baseline is valid.\n";

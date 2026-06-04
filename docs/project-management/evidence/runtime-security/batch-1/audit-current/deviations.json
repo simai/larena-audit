@@ -1,0 +1,6 @@
+{
+  "schema": "larena.package_batch_deviations.v1",
+  "package": "larena/audit",
+  "launch_record_ref": "specs/implementation-planning/launch-records/audit-batch-1-contract-skeletons-current.json",
+  "deviations": []
+}
