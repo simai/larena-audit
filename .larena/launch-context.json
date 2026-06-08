@@ -8,7 +8,9 @@
   "selected_features": [
     "audit.events",
     "audit.event_taxonomy_schema",
-    "audit.retention_sinks"
+    "audit.retention_sinks",
+    "audit.install_event_trail",
+    "audit.installer_action_audit"
   ],
   "allowed_files": [
     ".larena/launch-context.json",
@@ -26,7 +28,10 @@
     "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/file-map.json",
     "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/deviations.json",
     "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/graph-sync-proposal.json",
-    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md"
+    "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md",
+    "src/Install/InstallAuditTrail.php",
+    "database/migrations/2026_06_08_000001_create_larena_install_events_table.php",
+    "tests/Unit/InstallAuditTrailTest.php"
   ],
   "forbidden_files": [
     "composer.lock",
@@ -64,12 +69,12 @@
   ],
   "evidence_path": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/",
   "graph_sync_proposal_path": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/graph-sync-proposal.json",
-  "status": "contract_skeleton_review_passed",
+  "status": "coding_started",
   "coding_started": true,
   "repository_enforcement_installed": true,
   "review_completed": true,
   "review_evidence_ref": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md",
-  "next_transition": "merge_to_main",
+  "next_transition": "install_audit_trail_foundation_review",
   "local_validation": {
     "composer_validate": "passed",
     "composer_dump_autoload": "passed",
@@ -79,7 +84,7 @@
     "test": "passed",
     "evidence_check": "passed",
     "scope_check": "passed",
-    "quality_gate": "passed"
+    "quality_gate": "pending_after_install_audit_trail"
   },
   "coding_branch": "codex/runtime-security/audit/batch-2-in-memory-runtime",
   "previous_batch_ref": "docs/project-management/evidence/runtime-security/batch-1/audit-current/code-review-feedback.md"
