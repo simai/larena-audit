@@ -1,51 +1,53 @@
 {
-  "name": "larena/audit",
-  "description": "Larena Audit: Unified structured audit layer that receives package AuditEvent objects, validates taxonomy, redacts sensitive payloads, correlates runtime activity, routes events to sinks and provides operator search/export/diagnostics.",
-  "type": "library",
-  "license": "Apache-2.0",
-  "authors": [
-    {
-      "name": "Rim Zabarov",
-      "homepage": "https://github.com/zabarov"
-    }
-  ],
-  "require": {
-    "php": "^8.3"
-  },
-  "autoload": {
-    "psr-4": {
-      "Larena\\Audit\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Larena\\Audit\\Tests\\": "tests/"
-    }
-  },
-  "require-dev": {
-    "phpstan/phpstan": "^2.0"
-  },
-  "scripts": {
-    "test": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php",
-    "test:unit": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php",
-    "lint": "php scripts/lint.php",
-    "analyse": "php scripts/analyse.php",
-    "validate:larena": "php scripts/validate-larena-package.php",
-    "evidence:check": "php scripts/check-evidence.php",
-    "scope:check": "php tools/larena-scope-check.php",
-    "quality:gate": [
-      "@validate:larena",
-      "@lint",
-      "@analyse",
-      "@test",
-      "@evidence:check",
-      "@scope:check"
-    ]
-  },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {}
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true
+    "name": "larena/audit",
+    "description": "Larena Audit: Unified structured audit layer that receives package AuditEvent objects, validates taxonomy, redacts sensitive payloads, correlates runtime activity, routes events to sinks and provides operator search/export/diagnostics.",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Rim Zabarov",
+            "homepage": "https://github.com/zabarov"
+        }
+    ],
+    "require": {
+        "php": "^8.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Larena\\Audit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Larena\\Audit\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.0"
+    },
+    "scripts": {
+        "test": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php",
+        "test:unit": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php",
+        "lint": "php scripts/lint.php",
+        "analyse": "php scripts/analyse.php",
+        "validate:larena": "php scripts/validate-larena-package.php",
+        "evidence:check": "php scripts/check-evidence.php",
+        "scope:check": "php tools/larena-scope-check.php",
+        "quality:gate": [
+            "@validate:larena",
+            "@lint",
+            "@analyse",
+            "@test",
+            "@larena:metadata:check",
+            "@evidence:check",
+            "@scope:check"
+        ],
+        "larena:metadata:check": "php scripts/check-metadata-sync.php"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {}
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
