@@ -1,16 +1,18 @@
 package: larena/audit
 title: Larena Audit
-status: repository_prepared
+status: coding_started
 cluster: runtime-security
-batch: batch-0-clean-pre-codegen-baseline
+batch: audit-batch-2-in-memory-runtime
 features:
   - audit.admin_search_export
   - audit.correlation_explain
   - audit.event_taxonomy_schema
   - audit.events
+  - audit.install_event_trail
+  - audit.installer_action_audit
   - audit.retention_sinks
 runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/runtime-security/batch-0/audit-clean-baseline/
+  path: docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/
