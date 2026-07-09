@@ -28,6 +28,10 @@ function matches_pattern(string $file, string $pattern): bool
         return true;
     }
 
+    if (str_contains($pattern, '*') && fnmatch($pattern, $file, FNM_PATHNAME)) {
+        return true;
+    }
+
     if (str_ends_with($pattern, '/*')) {
         $prefix = substr($pattern, 0, -1);
         return str_starts_with($file, $prefix);
@@ -117,7 +121,13 @@ $errors = [];
 
 foreach ($changedFiles as $changedFile) {
     $file = normalize_path($changedFile);
-    $exactlyAllowed = in_array($file, $allowedFiles, true);
+    $exactlyAllowed = false;
+    foreach ($allowedFiles as $pattern) {
+        if (matches_pattern($file, $pattern)) {
+            $exactlyAllowed = true;
+            break;
+        }
+    }
     $evidenceAllowed = $evidencePath !== '' && str_starts_with($file, $evidencePath . '/');
 
     if ($repositoryResetPreCodegen && !file_exists($file)) {

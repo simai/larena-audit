@@ -2,7 +2,7 @@ package: larena/audit
 title: Larena Audit
 status: coding_started
 cluster: runtime-security
-batch: audit-batch-2-in-memory-runtime
+batch: audit-batch-3-database-runtime-sink
 features:
   - audit.admin_search_export
   - audit.correlation_explain
@@ -15,4 +15,4 @@ runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/
+  path: docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/

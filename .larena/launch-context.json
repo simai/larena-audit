@@ -1,10 +1,10 @@
 {
     "schema": "larena.package_launch_context.v1",
     "package": "larena/audit",
-    "launch_record_ref": "specs/implementation-planning/launch-records/audit-batch-2-in-memory-runtime.json",
+    "launch_record_ref": "specs/implementation-planning/launch-records/audit-batch-3-database-runtime-sink.json",
     "specs_repo": "simai/larena-specs",
-    "specs_commit": "4a1de58cf86e5ed69380bce32bf5c8b40cc8e9ae",
-    "base_commit": "7fe2ce0835e9885bec3f79d9bf0158bf7aa3628a",
+    "specs_commit": "10d2a5d22df085ab059cf18774ee08ff170a1c6e",
+    "base_commit": "e0554043d10ca35b0a1cc5fda09f07840ccf4b21",
     "selected_features": [
         "audit.events",
         "audit.event_taxonomy_schema",
@@ -34,28 +34,32 @@
         "src/Install/InstallAuditTrail.php",
         "database/migrations/2026_06_08_000001_create_larena_install_events_table.php",
         "tests/Unit/InstallAuditTrailTest.php"
+        ,"composer.lock"
+        ,"scripts/validate-larena-package.php"
+        ,"scripts/check-evidence.php"
+        ,"tools/larena-scope-check.php"
+        ,"src/Providers/AuditServiceProvider.php"
+        ,"src/Sinks/DatabaseAuditSink.php"
+        ,"database/migrations/*_create_larena_audit_events_table.php"
+        ,"tests/Unit/DatabaseAuditSinkTest.php"
+        ,"docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/*"
     ],
     "forbidden_files": [
-        "composer.lock",
-        "database/*",
         "routes/*",
         "resources/*",
         "lang/*",
         "src/Http/*",
-        "src/Providers/*",
-        "src/Sinks/DatabaseAuditSink.php",
-        "src/Sinks/FileAuditSink.php"
+        "src/Sinks/FileAuditSink.php",
+        "../auth/*",
+        "../access/*",
+        "../docara/*"
     ],
     "forbidden_behavior": [
-        "database_sink_runtime",
         "file_sink_runtime",
-        "persistence",
-        "migrations",
         "routes",
         "admin_ui",
         "retention_purge_or_compaction",
         "queue_worker",
-        "laravel_service_provider",
         "unredacted_payload_logging",
         "direct_larena_specs_update_by_package_agent"
     ],
@@ -69,14 +73,17 @@
         "graph-sync-proposal.json",
         "code-review-feedback.md"
     ],
-    "evidence_path": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/",
-    "graph_sync_proposal_path": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/graph-sync-proposal.json",
+    "evidence_path": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/",
+    "graph_sync_proposal_path": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/graph-sync-proposal.json",
     "status": "coding_started",
     "coding_started": true,
     "repository_enforcement_installed": true,
-    "review_completed": true,
-    "review_evidence_ref": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md",
-    "next_transition": "install_audit_trail_foundation_review",
+    "review_completed": false,
+    "next_transition": "implementation_written",
+    "action_gate": {
+        "status": "passed",
+        "evidence": "/Users/rim/Documents/GitHub/larena-workspace/packages/audit/source/output/action-gates/action-gate-report-20260709212657.json"
+    },
     "local_validation": {
         "composer_validate": "passed",
         "composer_dump_autoload": "passed",
@@ -86,8 +93,8 @@
         "test": "passed",
         "evidence_check": "passed",
         "scope_check": "passed",
-        "quality_gate": "pending_after_install_audit_trail"
+        "quality_gate": "pending_for_database_runtime_sink"
     },
     "coding_branch": "codex/runtime-security/audit/batch-2-in-memory-runtime",
-    "previous_batch_ref": "docs/project-management/evidence/runtime-security/batch-1/audit-current/code-review-feedback.md"
+    "previous_batch_ref": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md"
 }

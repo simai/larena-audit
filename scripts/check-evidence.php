@@ -5,9 +5,16 @@ declare(strict_types=1);
 $context = json_decode((string) file_get_contents('.larena/launch-context.json'), true, 512, JSON_THROW_ON_ERROR);
 $evidencePath = rtrim((string) $context['evidence_path'], '/') . '/';
 $proposalPath = (string) $context['graph_sync_proposal_path'];
+$requiredEvidenceFiles = $context['required_evidence_files'] ?? [];
 $errors = [];
 
-foreach (['README.md', 'implementation-summary.md', 'tests.md', 'smoke.md', 'file-map.json', 'deviations.json', 'graph-sync-proposal.json'] as $required) {
+$evidenceRequired = !in_array((string) ($context['status'] ?? ''), ['ready_to_code', 'coding_started'], true);
+if (!$evidenceRequired) {
+    echo "Post-implementation evidence is not required before implementation_written.\n";
+    exit(0);
+}
+
+foreach ($requiredEvidenceFiles as $required) {
     if (!is_file($evidencePath . $required)) {
         $errors[] = "Missing evidence file: {$evidencePath}{$required}";
     }
