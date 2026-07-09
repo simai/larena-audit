@@ -1,0 +1,7 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "canonical_update_allowed": false,
+  "proposal_status": "candidate_after_independent_review",
+  "observed_capabilities": ["audit.database_sink", "audit.event_persistence", "audit.migration_rollback"],
+  "limitations": ["no_retention_runtime", "no_search_or_export_ui", "developer_alpha_prerequisite_only"]
+}

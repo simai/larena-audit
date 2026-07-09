@@ -57,6 +57,8 @@ foreach (['src', 'config', 'database', 'routes', 'resources', 'tests', 'lang'] a
 if ($codingStarted) {
     $allowedCodingStatuses = [
         'coding_started',
+        'implementation_written',
+        'reviewed',
         'contract_skeleton_review_passed',
     ];
 

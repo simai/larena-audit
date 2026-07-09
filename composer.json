@@ -10,6 +10,8 @@
         }
     ],
     "require": {
+        "illuminate/database": "^13.0",
+        "illuminate/support": "^13.0",
         "php": "^8.3"
     },
     "autoload": {
@@ -23,13 +25,14 @@
         }
     },
     "require-dev": {
+        "laravel/framework": "^13.0",
         "phpstan/phpstan": "^2.0"
     },
     "scripts": {
-        "test": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php",
-        "test:unit": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php",
+        "test": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php && php tests/Unit/DatabaseAuditSinkTest.php",
+        "test:unit": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php && php tests/Unit/DatabaseAuditSinkTest.php",
         "lint": "php scripts/lint.php",
-        "analyse": "php scripts/analyse.php",
+        "analyse": "php vendor/bin/phpstan analyse --configuration=phpstan.neon.dist --no-progress --memory-limit=512M",
         "validate:larena": "php scripts/validate-larena-package.php",
         "evidence:check": "php scripts/check-evidence.php",
         "scope:check": "php tools/larena-scope-check.php",
@@ -46,7 +49,17 @@
     },
     "config": {
         "sort-packages": true,
-        "allow-plugins": {}
+        "allow-plugins": {},
+        "platform": {
+            "php": "8.3.31"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Larena\\Audit\\Providers\\AuditServiceProvider"
+            ]
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true

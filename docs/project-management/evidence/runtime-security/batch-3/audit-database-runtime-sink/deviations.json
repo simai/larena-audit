@@ -1,0 +1,9 @@
+{
+  "schema": "larena.batch_deviations.v1",
+  "scope_deviations": [],
+  "notes": [
+    "laravel/framework is a dev-only dependency used to provide the correctly typed test Application; runtime requires remain illuminate/database and illuminate/support.",
+    "One failed test-run database was moved to /tmp/larena-audit-quarantine before the final clean lifecycle run; it is not acceptance evidence."
+  ],
+  "production_readiness_claimed": false
+}

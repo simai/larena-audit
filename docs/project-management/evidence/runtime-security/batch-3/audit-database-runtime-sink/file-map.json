@@ -1,0 +1,11 @@
+{
+  "schema": "larena.batch_file_map.v1",
+  "files": {
+    "src/Sinks/DatabaseAuditSink.php": "persists normalized redacted audit events",
+    "src/Providers/AuditServiceProvider.php": "registers migration and runtime bindings",
+    "database/migrations/2026_07_09_000001_create_larena_audit_events_table.php": "creates and removes the audit-owned table",
+    "tests/Unit/DatabaseAuditSinkTest.php": "proves file-backed persistence, redaction, reconnect, rollback, and cleanup",
+    "composer.json": "declares runtime Illuminate components, provider discovery, PHP 8.3 platform, and the executable test",
+    "composer.lock": "locks the PHP 8.3-compatible dependency graph"
+  }
+}

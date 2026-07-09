@@ -64,22 +64,22 @@
         "direct_larena_specs_update_by_package_agent"
     ],
     "required_evidence_files": [
-        "README.md",
         "implementation-summary.md",
         "tests.md",
         "smoke.md",
         "file-map.json",
         "deviations.json",
         "graph-sync-proposal.json",
-        "code-review-feedback.md"
+        "independent-review.md"
     ],
     "evidence_path": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/",
     "graph_sync_proposal_path": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/graph-sync-proposal.json",
-    "status": "coding_started",
+    "status": "reviewed",
     "coding_started": true,
     "repository_enforcement_installed": true,
-    "review_completed": false,
-    "next_transition": "implementation_written",
+    "review_completed": true,
+    "review_evidence_ref": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/independent-review.md",
+    "next_transition": "access_docara_page_write_policy",
     "action_gate": {
         "status": "passed",
         "evidence": "/Users/rim/Documents/GitHub/larena-workspace/packages/audit/source/output/action-gates/action-gate-report-20260709212657.json"
@@ -93,8 +93,9 @@
         "test": "passed",
         "evidence_check": "passed",
         "scope_check": "passed",
-        "quality_gate": "pending_for_database_runtime_sink"
+        "quality_gate": "passed_for_database_runtime_sink",
+        "independent_review": "passed"
     },
-    "coding_branch": "codex/runtime-security/audit/batch-2-in-memory-runtime",
+    "coding_branch": "main",
     "previous_batch_ref": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md"
 }
