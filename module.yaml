@@ -1,8 +1,8 @@
 package: larena/audit
 title: Larena Audit
-status: reviewed
+status: coding_started
 cluster: runtime-security
-batch: users-role-presets-developer-slice
+batch: media-library-page-assets-developer-slice
 features:
   - audit.user_role_lifecycle_events
   - audit.access_denial_events
@@ -19,8 +19,9 @@ features:
   - audit.product_navigation
   - audit.history_read_permission
   - audit.localized_history
+  - audit.media_history_projection
 runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/users-role-presets-developer-slice/
+  path: docs/project-management/evidence/media-library-page-assets-developer-slice/

@@ -49,6 +49,7 @@ final readonly class AuditHistoryReader
                 $query->whereIn('event_type', [
                     'docara_page_created', 'docara_page_updated', 'docara_page_published',
                     'docara_page_unpublished', 'docara_page_update_denied',
+                    'file_uploaded', 'file_metadata_updated', 'file_deleted', 'file_used',
                 ])->orWhere('event_type', 'like', 'auth.%')
                     ->orWhere('event_type', 'like', 'access.%');
             })
@@ -65,7 +66,7 @@ final readonly class AuditHistoryReader
     {
         $payload = $this->safePayload((string) $event->payload);
         $detail = [];
-        foreach (['slug', 'status', 'version', 'role', 'operation', 'reason'] as $key) {
+        foreach (['slug', 'status', 'version', 'role', 'operation', 'reason', 'logical_ref', 'display_name', 'mime_type', 'size_bytes', 'visibility', 'purpose'] as $key) {
             $value = $this->allowedString($payload, $key);
             if ($value !== null) { $detail[$key] = $value; }
         }
@@ -129,6 +130,10 @@ final readonly class AuditHistoryReader
             'docara_page_published' => 'Published',
             'docara_page_unpublished' => 'Unpublished',
             'docara_page_update_denied' => 'Permission denied',
+            'file_uploaded' => 'File uploaded',
+            'file_metadata_updated' => 'File metadata updated',
+            'file_deleted' => 'File deleted',
+            'file_used' => 'File used on page',
             default => str_starts_with($eventType, 'auth.') || str_starts_with($eventType, 'access.')
                 ? 'Security activity'
                 : 'Page activity',
