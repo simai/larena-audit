@@ -15,6 +15,8 @@ return [
             'web',
             'larena-auth.entry',
             'larena-auth.admin-required',
+            'larena-admin.locale',
+            'access:audit.history.read',
         ],
         'limit' => 100,
     ],

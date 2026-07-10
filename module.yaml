@@ -2,7 +2,7 @@ package: larena/audit
 title: Larena Audit
 status: reviewed
 cluster: runtime-security
-batch: developer-audit-history-surface
+batch: post-beta-content-site-assembly
 features:
   - audit.admin_history
   - audit.admin_search_export
@@ -13,8 +13,11 @@ features:
   - audit.installer_action_audit
   - audit.retention_sinks
   - audit.safe_read_model
+  - audit.product_navigation
+  - audit.history_read_permission
+  - audit.localized_history
 runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/developer-beta/audit-history-surface/
+  path: docs/project-management/evidence/post-beta-content-site-assembly/

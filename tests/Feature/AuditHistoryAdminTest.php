@@ -61,8 +61,20 @@ final class AuditHistoryAdminTest extends TestCase
             'web',
             'larena-auth.entry',
             'larena-auth.admin-required',
+            'larena-admin.locale',
+            'access:audit.history.read',
         ], $config['admin']['middleware']);
         self::assertSame(['local', 'testing'], $config['admin']['allowed_environments']);
+    }
+
+    public function testHistorySurfaceHasRussianTranslationParity(): void
+    {
+        $this->app->setLocale('ru');
+
+        $this->get('/admin/audit')
+            ->assertOk()
+            ->assertSee('История действий')
+            ->assertSee('Действий со страницами пока нет');
     }
 
     /** @param array<string, mixed> $payload */

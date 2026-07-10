@@ -1,48 +1,44 @@
 {
   "schema": "larena.package_launch_context.v1",
   "package": "larena/audit",
-  "launch_record_ref": "docs/project-management/launch-records/developer-audit-history-surface.json",
+  "repository_class": "continuation_repository",
+  "repository_contains_prior_implementation": true,
+  "launch_record_ref": "/Users/rim/Documents/GitHub/larena/docs/project-management/launch-records/post-beta-content-site-assembly.json",
   "specs_repo": "simai/larena-specs",
-  "specs_commit": "10d2a5d22df085ab059cf18774ee08ff170a1c6e",
-  "base_commit": "67ed60fd799ef20c0ee08dfe2ba73a95b0f8f63c",
+  "specs_commit": "665f7d8bf5abcd13f06b852f0702e31582b8708e",
+  "base_commit": "d9cd34aea2dc2986adcd449ab261df683113fbf2",
   "selected_features": [
-    "audit.events",
-    "audit.retention_sinks",
-    "audit.admin_history",
-    "audit.safe_read_model"
+    "audit.product_navigation",
+    "audit.history_read_permission",
+    "audit.localized_history"
   ],
   "allowed_files": [
     ".larena/launch-context.json",
-    "module.yaml",
-    "composer.json",
-    "composer.lock",
+    "phpstan.neon.dist",
     "config/larena-audit.php",
     "routes/admin.php",
     "src/Providers/AuditServiceProvider.php",
-    "src/Http/Controllers/AuditHistoryAdminController.php",
-    "src/ReadModel/AuditHistoryReader.php",
+    "src/Navigation/AuditAdminNavigationContributor.php",
     "resources/views/admin/index.blade.php",
-    "tests/TestCase.php",
-    "tests/Fixtures/views/layouts/app.blade.php",
-    "tests/Feature/AuditHistoryAdminTest.php",
+    "resources/lang/en/admin.php",
+    "resources/lang/ru/admin.php",
+    "tests/Feature/*",
+    "module.yaml",
     "scripts/validate-larena-package.php",
-    "docs/project-management/evidence/developer-beta/audit-history-surface/*"
+    "docs/project-management/evidence/post-beta-content-site-assembly/*"
   ],
   "forbidden_files": [
-    "database/migrations/*",
+    "database/*",
     "../admin/*",
-    "../auth/*",
     "../access/*",
+    "../auth/*",
     "../docara/*"
   ],
   "forbidden_behavior": [
-    "database_schema_change",
-    "audit_event_mutation_from_history_screen",
-    "anonymous_audit_history",
+    "audit_event_mutation",
     "raw_payload_rendering",
-    "body_or_secret_rendering",
-    "retention_purge_or_compaction",
-    "direct_larena_specs_update_by_package_agent"
+    "retention_change",
+    "production_readiness_claim"
   ],
   "required_evidence_files": [
     "implementation-summary.md",
@@ -52,29 +48,27 @@
     "graph-sync-proposal.json",
     "independent-review.md"
   ],
-  "evidence_path": "docs/project-management/evidence/developer-beta/audit-history-surface/",
-  "graph_sync_proposal_path": "docs/project-management/evidence/developer-beta/audit-history-surface/graph-sync-proposal.json",
+  "evidence_path": "docs/project-management/evidence/post-beta-content-site-assembly/",
+  "graph_sync_proposal_path": "docs/project-management/evidence/post-beta-content-site-assembly/graph-sync-proposal.json",
   "status": "reviewed",
+  "coding_allowed": true,
   "coding_started": true,
   "repository_enforcement_installed": true,
   "review_completed": true,
-  "review_evidence_ref": "docs/project-management/evidence/developer-beta/audit-history-surface/independent-review.md",
+  "review_evidence_ref": "docs/project-management/evidence/post-beta-content-site-assembly/independent-review.md",
   "next_transition": "package_publish",
-  "action_gate": {
-    "status": "passed",
-    "evidence": "/Users/rim/Documents/GitHub/larena-workspace/packages/audit/source/output/action-gates/action-gate-report-20260710075036.json"
-  },
   "local_validation": {
-    "composer_validate": "passed",
-    "validate_larena": "passed",
-    "lint": "passed_31_files",
+    "lint": "passed_32_files",
     "analyse": "passed_level_5",
-    "test": "passed_7_standalone_plus_3_feature_21_assertions",
-    "browser_smoke": "passed_disposable_sqlite",
-    "evidence_check": "passed",
-    "scope_check": "passed_21_files",
-    "quality_gate": "passed_for_audit_history_surface"
+    "test": "passed_7_scripts_plus_4_feature_25_assertions",
+    "browser": "passed_localized_history",
+    "scope_check": "passed"
   },
-  "coding_branch": "main",
-  "previous_batch_ref": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/independent-review.md"
+  "test_database_policy": {
+    "environment": "local_test_only",
+    "database": "none",
+    "existing_application_database": "forbidden",
+    "cleanup": "not_applicable"
+  },
+  "coding_branch": "main"
 }

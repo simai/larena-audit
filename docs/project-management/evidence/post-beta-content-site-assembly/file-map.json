@@ -1,0 +1,16 @@
+{
+  "schema": "larena.package_evidence_file_map.v1",
+  "owner_package": "larena/audit",
+  "runtime": [
+    "config/larena-audit.php",
+    "src/Providers/AuditServiceProvider.php",
+    "src/Navigation/AuditAdminNavigationContributor.php",
+    "resources/views/admin/index.blade.php",
+    "resources/lang/en/admin.php",
+    "resources/lang/ru/admin.php"
+  ],
+  "tests": ["tests/Feature/AuditHistoryAdminTest.php"],
+  "schema_changed": false,
+  "write_behavior_changed": false,
+  "production_ready": false
+}

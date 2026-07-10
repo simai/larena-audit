@@ -1,0 +1,8 @@
+{
+  "schema": "larena.package_evidence_deviations.v1",
+  "deviations": [],
+  "blockers": [],
+  "notes": [
+    "The standalone package scans ../admin/src for static analysis only; Admin remains an optional assembled-runtime integration to avoid a circular production dependency."
+  ]
+}

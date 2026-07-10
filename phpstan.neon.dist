@@ -1,5 +1,7 @@
 parameters:
   level: 5
+  scanDirectories:
+    - ../admin/src
   paths:
     - scripts
     - tools
