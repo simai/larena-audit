@@ -1,0 +1,6 @@
+schema: larena.access.descriptor.v1
+package: larena/audit
+operations:
+  - code: audit.history.read
+    risk: high
+    audit: denial

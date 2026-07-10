@@ -2,8 +2,11 @@ package: larena/audit
 title: Larena Audit
 status: reviewed
 cluster: runtime-security
-batch: post-beta-content-site-assembly
+batch: users-role-presets-developer-slice
 features:
+  - audit.user_role_lifecycle_events
+  - audit.access_denial_events
+  - audit.product_history_projection
   - audit.admin_history
   - audit.admin_search_export
   - audit.correlation_explain
@@ -20,4 +23,4 @@ runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/post-beta-content-site-assembly/
+  path: docs/project-management/evidence/users-role-presets-developer-slice/

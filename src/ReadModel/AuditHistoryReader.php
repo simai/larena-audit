@@ -41,6 +41,44 @@ final readonly class AuditHistoryReader
             ->all();
     }
 
+    /** @return list<array<string, mixed>> */
+    public function events(): array
+    {
+        return $this->connection->table('larena_audit_events')
+            ->where(static function ($query): void {
+                $query->whereIn('event_type', [
+                    'docara_page_created', 'docara_page_updated', 'docara_page_published',
+                    'docara_page_unpublished', 'docara_page_update_denied',
+                ])->orWhere('event_type', 'like', 'auth.%')
+                    ->orWhere('event_type', 'like', 'access.%');
+            })
+            ->orderByDesc('id')
+            ->limit(max(1, min($this->limit, 500)))
+            ->get()
+            ->map(fn (stdClass $event): array => $this->presentGeneric($event))
+            ->values()
+            ->all();
+    }
+
+    /** @return array<string, mixed> */
+    private function presentGeneric(stdClass $event): array
+    {
+        $payload = $this->safePayload((string) $event->payload);
+        $detail = [];
+        foreach (['slug', 'status', 'version', 'role', 'operation', 'reason'] as $key) {
+            $value = $this->allowedString($payload, $key);
+            if ($value !== null) { $detail[$key] = $value; }
+        }
+
+        return [
+            'id' => (int) $event->id, 'category' => (string) $event->category,
+            'operation' => $this->operationLabel((string) $event->event_type),
+            'operation_code' => (string) $event->event_type, 'actor' => (string) $event->actor,
+            'subject' => (string) $event->subject, 'detail' => $detail,
+            'occurred_at' => (string) $event->occurred_at,
+        ];
+    }
+
     /**
      * The persistent payload is deliberately projected through an allowlist.
      * Raw payload, content body and unknown fields never reach the view.
@@ -91,7 +129,9 @@ final readonly class AuditHistoryReader
             'docara_page_published' => 'Published',
             'docara_page_unpublished' => 'Unpublished',
             'docara_page_update_denied' => 'Permission denied',
-            default => 'Page activity',
+            default => str_starts_with($eventType, 'auth.') || str_starts_with($eventType, 'access.')
+                ? 'Security activity'
+                : 'Page activity',
         };
     }
 }

@@ -46,6 +46,14 @@ final class AuditServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $registryClass = 'Larena\\Access\\Runtime\\AccessOperationRegistry';
+        $descriptorClass = 'Larena\\Access\\ValueObjects\\AccessOperationDescriptor';
+        if (class_exists($registryClass) && class_exists($descriptorClass)) {
+            $this->app->make($registryClass)->register(new $descriptorClass(
+                'audit.history.read', 'larena/audit', 'larena-audit::operations.history_read', 'audit.history:all', 'read', 'high',
+            ));
+        }
+
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'larena-audit');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'larena-audit');

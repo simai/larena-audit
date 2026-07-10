@@ -1,0 +1,1 @@
+{"schema":"larena.graph_sync_proposal.v1","package":"larena/audit","status":"proposal_only","canonical_update_allowed":false,"add_capabilities":["audit.user_role_lifecycle_events","audit.access_denial_events","audit.product_history_projection"]}

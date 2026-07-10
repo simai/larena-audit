@@ -3,72 +3,24 @@
   "package": "larena/audit",
   "repository_class": "continuation_repository",
   "repository_contains_prior_implementation": true,
-  "launch_record_ref": "/Users/rim/Documents/GitHub/larena/docs/project-management/launch-records/post-beta-content-site-assembly.json",
-  "specs_repo": "simai/larena-specs",
-  "specs_commit": "665f7d8bf5abcd13f06b852f0702e31582b8708e",
-  "base_commit": "d9cd34aea2dc2986adcd449ab261df683113fbf2",
-  "selected_features": [
-    "audit.product_navigation",
-    "audit.history_read_permission",
-    "audit.localized_history"
-  ],
+  "launch_record_ref": "/Users/rim/Documents/GitHub/larena/docs/project-management/launch-records/users-role-presets-developer-slice.json",
+  "specs_repo": "simai/larena-specs", "specs_commit": "665f7d8bf5abcd13f06b852f0702e31582b8708e",
+  "base_commit": "d36f31c01695949805b80ec7d1da512abacfd5d7",
+  "selected_features": ["audit.user_role_lifecycle_events", "audit.access_denial_events", "audit.product_history_projection"],
   "allowed_files": [
-    ".larena/launch-context.json",
-    "phpstan.neon.dist",
-    "config/larena-audit.php",
-    "routes/admin.php",
-    "src/Providers/AuditServiceProvider.php",
-    "src/Navigation/AuditAdminNavigationContributor.php",
-    "resources/views/admin/index.blade.php",
-    "resources/lang/en/admin.php",
-    "resources/lang/ru/admin.php",
-    "tests/Feature/*",
-    "module.yaml",
-    "scripts/validate-larena-package.php",
-    "docs/project-management/evidence/post-beta-content-site-assembly/*"
+    ".larena/launch-context.json", "composer.json", "composer.lock", "module.yaml", "access.yaml", "config/larena-audit.php", "routes/admin.php",
+    "src/Providers/AuditServiceProvider.php", "src/ReadModel/AuditHistoryReader.php", "src/Http/Controllers/AuditHistoryAdminController.php", "resources/views/admin/index.blade.php",
+    "resources/lang/en/admin.php", "resources/lang/ru/admin.php", "resources/lang/en/operations.php", "resources/lang/ru/operations.php",
+    "tests/Feature/AuditHistoryAdminTest.php", "tests/Unit/*", "scripts/validate-larena-package.php", "tools/larena-scope-check.php", "docs/*",
+    "docs/project-management/evidence/users-role-presets-developer-slice/*"
   ],
-  "forbidden_files": [
-    "database/*",
-    "../admin/*",
-    "../access/*",
-    "../auth/*",
-    "../docara/*"
-  ],
-  "forbidden_behavior": [
-    "audit_event_mutation",
-    "raw_payload_rendering",
-    "retention_change",
-    "production_readiness_claim"
-  ],
-  "required_evidence_files": [
-    "implementation-summary.md",
-    "tests.md",
-    "file-map.json",
-    "deviations.json",
-    "graph-sync-proposal.json",
-    "independent-review.md"
-  ],
-  "evidence_path": "docs/project-management/evidence/post-beta-content-site-assembly/",
-  "graph_sync_proposal_path": "docs/project-management/evidence/post-beta-content-site-assembly/graph-sync-proposal.json",
-  "status": "reviewed",
-  "coding_allowed": true,
-  "coding_started": true,
-  "repository_enforcement_installed": true,
-  "review_completed": true,
-  "review_evidence_ref": "docs/project-management/evidence/post-beta-content-site-assembly/independent-review.md",
-  "next_transition": "package_publish",
-  "local_validation": {
-    "lint": "passed_32_files",
-    "analyse": "passed_level_5",
-    "test": "passed_7_scripts_plus_4_feature_25_assertions",
-    "browser": "passed_localized_history",
-    "scope_check": "passed"
-  },
-  "test_database_policy": {
-    "environment": "local_test_only",
-    "database": "none",
-    "existing_application_database": "forbidden",
-    "cleanup": "not_applicable"
-  },
+  "forbidden_files": ["database/migrations/*", "../access/*", "../auth/*", "../admin/*"],
+  "forbidden_behavior": ["raw_secret_payload", "audit_decides_access", "framework_log_as_only_audit_truth", "production_readiness_claim"],
+  "required_evidence_files": ["implementation-summary.md", "tests.md", "file-map.json", "deviations.json", "graph-sync-proposal.json", "independent-review.md"],
+  "evidence_path": "docs/project-management/evidence/users-role-presets-developer-slice/",
+  "graph_sync_proposal_path": "docs/project-management/evidence/users-role-presets-developer-slice/graph-sync-proposal.json",
+  "status": "reviewed", "coding_allowed": true, "coding_started": true, "repository_enforcement_installed": true, "review_completed": true,
+  "next_transition": null,
+  "test_database_policy": {"environment": "local_test_only", "database": "disposable_file_sqlite", "existing_application_database": "forbidden", "cleanup": "required"},
   "coding_branch": "main"
 }

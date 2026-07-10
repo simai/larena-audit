@@ -67,6 +67,20 @@ final class AuditHistoryAdminTest extends TestCase
         self::assertSame(['local', 'testing'], $config['admin']['allowed_environments']);
     }
 
+    public function testSecurityLifecycleEventsUseSafeProjection(): void
+    {
+        $this->insertEvent(1, 'auth.user.created', [
+            'role' => 'editor', 'password' => 'must-not-render', 'password_hash' => 'must-not-render-either',
+        ], 'larena/auth', 'identity_lifecycle');
+
+        $this->get('/admin/audit')->assertOk()
+            ->assertSee('Security activity')
+            ->assertSee('auth.user.created')
+            ->assertSee('role')
+            ->assertSee('editor')
+            ->assertDontSee('must-not-render');
+    }
+
     public function testHistorySurfaceHasRussianTranslationParity(): void
     {
         $this->app->setLocale('ru');

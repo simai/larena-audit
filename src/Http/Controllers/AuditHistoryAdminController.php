@@ -12,7 +12,7 @@ final readonly class AuditHistoryAdminController
     public function __invoke(AuditHistoryReader $history): View
     {
         return view('larena-audit::admin.index', [
-            'events' => $history->pageEvents(),
+            'events' => $history->events(),
         ]);
     }
 }
