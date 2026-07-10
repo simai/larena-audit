@@ -1,0 +1,10 @@
+{
+  "schema": "larena.audit.batch_deviations.v1",
+  "batch": "batch_7_audit_history_surface",
+  "deviations": [],
+  "blockers": [],
+  "notes": [
+    "The package feature test substitutes the Admin layout and removes middleware so it can test the package read model without introducing circular Audit-to-Admin/Auth dependencies.",
+    "Assembled-runtime route inventory, anonymous redirect and browser login provide the integration proof for the real middleware and Admin layout."
+  ]
+}

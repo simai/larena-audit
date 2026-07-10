@@ -1,0 +1,22 @@
+{
+  "schema": "larena.audit.batch_file_map.v1",
+  "batch": "batch_7_audit_history_surface",
+  "owner_package": "larena/audit",
+  "runtime": [
+    "config/larena-audit.php",
+    "routes/admin.php",
+    "src/Providers/AuditServiceProvider.php",
+    "src/Http/Controllers/AuditHistoryAdminController.php",
+    "src/ReadModel/AuditHistoryReader.php",
+    "resources/views/admin/index.blade.php"
+  ],
+  "tests": [
+    "tests/TestCase.php",
+    "tests/Fixtures/views/layouts/app.blade.php",
+    "tests/Feature/AuditHistoryAdminTest.php"
+  ],
+  "schema_changed": false,
+  "write_behavior_changed": false,
+  "production_ready": false,
+  "all_41_packages_ready": false
+}

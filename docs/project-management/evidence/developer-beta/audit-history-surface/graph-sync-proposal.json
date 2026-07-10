@@ -1,0 +1,13 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "package": "larena/audit",
+  "batch": "batch_7_audit_history_surface",
+  "canonical_update_allowed": false,
+  "proposal_only": true,
+  "proposed_capabilities": [
+    "audit.admin_history",
+    "audit.safe_read_model"
+  ],
+  "evidence": "docs/project-management/evidence/developer-beta/audit-history-surface/",
+  "production_readiness_changed": false
+}

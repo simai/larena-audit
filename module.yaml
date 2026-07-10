@@ -2,8 +2,9 @@ package: larena/audit
 title: Larena Audit
 status: reviewed
 cluster: runtime-security
-batch: audit-batch-3-database-runtime-sink
+batch: developer-audit-history-surface
 features:
+  - audit.admin_history
   - audit.admin_search_export
   - audit.correlation_explain
   - audit.event_taxonomy_schema
@@ -11,8 +12,9 @@ features:
   - audit.install_event_trail
   - audit.installer_action_audit
   - audit.retention_sinks
+  - audit.safe_read_model
 runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/
+  path: docs/project-management/evidence/developer-beta/audit-history-surface/

@@ -1,101 +1,80 @@
 {
-    "schema": "larena.package_launch_context.v1",
-    "package": "larena/audit",
-    "launch_record_ref": "specs/implementation-planning/launch-records/audit-batch-3-database-runtime-sink.json",
-    "specs_repo": "simai/larena-specs",
-    "specs_commit": "10d2a5d22df085ab059cf18774ee08ff170a1c6e",
-    "base_commit": "e0554043d10ca35b0a1cc5fda09f07840ccf4b21",
-    "selected_features": [
-        "audit.events",
-        "audit.event_taxonomy_schema",
-        "audit.retention_sinks",
-        "audit.install_event_trail",
-        "audit.installer_action_audit"
-    ],
-    "allowed_files": [
-        "scripts/check-metadata-sync.php",
-        "module.yaml",
-        ".larena/launch-context.json",
-        "composer.json",
-        "src/Runtime/DefaultAuditRedactor.php",
-        "src/Runtime/InMemoryAuditSink.php",
-        "src/Runtime/AuditEventPipeline.php",
-        "tests/Unit/AuditRedactorRuntimeTest.php",
-        "tests/Unit/AuditEventPipelineTest.php",
-        "tests/Unit/AuditEventPipelineFailsClosedTest.php",
-        "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/README.md",
-        "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/implementation-summary.md",
-        "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/tests.md",
-        "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/smoke.md",
-        "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/file-map.json",
-        "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/deviations.json",
-        "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/graph-sync-proposal.json",
-        "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md",
-        "src/Install/InstallAuditTrail.php",
-        "database/migrations/2026_06_08_000001_create_larena_install_events_table.php",
-        "tests/Unit/InstallAuditTrailTest.php"
-        ,"composer.lock"
-        ,"scripts/validate-larena-package.php"
-        ,"scripts/check-evidence.php"
-        ,"tools/larena-scope-check.php"
-        ,"src/Providers/AuditServiceProvider.php"
-        ,"src/Sinks/DatabaseAuditSink.php"
-        ,"database/migrations/*_create_larena_audit_events_table.php"
-        ,"tests/Unit/DatabaseAuditSinkTest.php"
-        ,"docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/*"
-    ],
-    "forbidden_files": [
-        "routes/*",
-        "resources/*",
-        "lang/*",
-        "src/Http/*",
-        "src/Sinks/FileAuditSink.php",
-        "../auth/*",
-        "../access/*",
-        "../docara/*"
-    ],
-    "forbidden_behavior": [
-        "file_sink_runtime",
-        "routes",
-        "admin_ui",
-        "retention_purge_or_compaction",
-        "queue_worker",
-        "unredacted_payload_logging",
-        "direct_larena_specs_update_by_package_agent"
-    ],
-    "required_evidence_files": [
-        "implementation-summary.md",
-        "tests.md",
-        "smoke.md",
-        "file-map.json",
-        "deviations.json",
-        "graph-sync-proposal.json",
-        "independent-review.md"
-    ],
-    "evidence_path": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/",
-    "graph_sync_proposal_path": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/graph-sync-proposal.json",
-    "status": "reviewed",
-    "coding_started": true,
-    "repository_enforcement_installed": true,
-    "review_completed": true,
-    "review_evidence_ref": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/independent-review.md",
-    "next_transition": "access_docara_page_write_policy",
-    "action_gate": {
-        "status": "passed",
-        "evidence": "/Users/rim/Documents/GitHub/larena-workspace/packages/audit/source/output/action-gates/action-gate-report-20260709212657.json"
-    },
-    "local_validation": {
-        "composer_validate": "passed",
-        "composer_dump_autoload": "passed",
-        "validate_larena": "passed",
-        "lint": "passed",
-        "analyse": "passed",
-        "test": "passed",
-        "evidence_check": "passed",
-        "scope_check": "passed",
-        "quality_gate": "passed_for_database_runtime_sink",
-        "independent_review": "passed"
-    },
-    "coding_branch": "main",
-    "previous_batch_ref": "docs/project-management/evidence/runtime-security/batch-2/audit-in-memory-runtime/code-review-feedback.md"
+  "schema": "larena.package_launch_context.v1",
+  "package": "larena/audit",
+  "launch_record_ref": "docs/project-management/launch-records/developer-audit-history-surface.json",
+  "specs_repo": "simai/larena-specs",
+  "specs_commit": "10d2a5d22df085ab059cf18774ee08ff170a1c6e",
+  "base_commit": "67ed60fd799ef20c0ee08dfe2ba73a95b0f8f63c",
+  "selected_features": [
+    "audit.events",
+    "audit.retention_sinks",
+    "audit.admin_history",
+    "audit.safe_read_model"
+  ],
+  "allowed_files": [
+    ".larena/launch-context.json",
+    "module.yaml",
+    "composer.json",
+    "composer.lock",
+    "config/larena-audit.php",
+    "routes/admin.php",
+    "src/Providers/AuditServiceProvider.php",
+    "src/Http/Controllers/AuditHistoryAdminController.php",
+    "src/ReadModel/AuditHistoryReader.php",
+    "resources/views/admin/index.blade.php",
+    "tests/TestCase.php",
+    "tests/Fixtures/views/layouts/app.blade.php",
+    "tests/Feature/AuditHistoryAdminTest.php",
+    "scripts/validate-larena-package.php",
+    "docs/project-management/evidence/developer-beta/audit-history-surface/*"
+  ],
+  "forbidden_files": [
+    "database/migrations/*",
+    "../admin/*",
+    "../auth/*",
+    "../access/*",
+    "../docara/*"
+  ],
+  "forbidden_behavior": [
+    "database_schema_change",
+    "audit_event_mutation_from_history_screen",
+    "anonymous_audit_history",
+    "raw_payload_rendering",
+    "body_or_secret_rendering",
+    "retention_purge_or_compaction",
+    "direct_larena_specs_update_by_package_agent"
+  ],
+  "required_evidence_files": [
+    "implementation-summary.md",
+    "tests.md",
+    "file-map.json",
+    "deviations.json",
+    "graph-sync-proposal.json",
+    "independent-review.md"
+  ],
+  "evidence_path": "docs/project-management/evidence/developer-beta/audit-history-surface/",
+  "graph_sync_proposal_path": "docs/project-management/evidence/developer-beta/audit-history-surface/graph-sync-proposal.json",
+  "status": "reviewed",
+  "coding_started": true,
+  "repository_enforcement_installed": true,
+  "review_completed": true,
+  "review_evidence_ref": "docs/project-management/evidence/developer-beta/audit-history-surface/independent-review.md",
+  "next_transition": "package_publish",
+  "action_gate": {
+    "status": "passed",
+    "evidence": "/Users/rim/Documents/GitHub/larena-workspace/packages/audit/source/output/action-gates/action-gate-report-20260710075036.json"
+  },
+  "local_validation": {
+    "composer_validate": "passed",
+    "validate_larena": "passed",
+    "lint": "passed_31_files",
+    "analyse": "passed_level_5",
+    "test": "passed_7_standalone_plus_3_feature_21_assertions",
+    "browser_smoke": "passed_disposable_sqlite",
+    "evidence_check": "passed",
+    "scope_check": "passed_21_files",
+    "quality_gate": "passed_for_audit_history_surface"
+  },
+  "coding_branch": "main",
+  "previous_batch_ref": "docs/project-management/evidence/runtime-security/batch-3/audit-database-runtime-sink/independent-review.md"
 }
