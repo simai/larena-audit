@@ -13,9 +13,14 @@
         "illuminate/database": "^13.0",
         "illuminate/routing": "^13.0",
         "illuminate/support": "^13.0",
-        "illuminate/view": "^13.0",
-        "php": "^8.3"
-    },
+    "illuminate/view": "^13.0",
+    "larena/ui": "dev-main",
+    "php": "^8.3"
+  },
+  "repositories": [
+    {"type": "path", "url": "../ui", "options": {"symlink": true}},
+    {"type": "path", "url": "../dataview", "options": {"symlink": true}}
+  ],
     "autoload": {
         "psr-4": {
             "Larena\\Audit\\": "src/"
@@ -64,6 +69,6 @@
             ]
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

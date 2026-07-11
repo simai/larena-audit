@@ -40,7 +40,7 @@ final class AuditHistoryAdminTest extends TestCase
         $response->assertOk()
             ->assertSee('data-larena-audit-history="persistent"', false)
             ->assertSeeInOrder(['Published', 'Created'])
-            ->assertSee('&lt;welcome&gt;', false)
+            ->assertSee('\u003Cwelcome\u003E', false)
             ->assertSee('user:admin_identity:1')
             ->assertSee('published')
             ->assertDontSee('TOP SECRET BODY')
