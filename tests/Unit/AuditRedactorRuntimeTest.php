@@ -27,6 +27,22 @@ assert_redactor_true($redacted['reason'] === 'mfa_required', 'Non-sensitive fiel
 assert_redactor_true($redacted['token'] === DefaultAuditRedactor::REDACTED_VALUE, 'Sensitive fields must be redacted.');
 assert_redactor_true($redacted['ip'] === '127.0.0.1', 'Searchable metadata must remain available.');
 
+$nestedRedacted = $redactor->redact([
+    'context' => [
+        'attempts' => [
+            ['token' => 'nested-secret', 'reason' => 'mfa_required'],
+        ],
+    ],
+], ['token'], ['password']);
+assert_redactor_true(
+    $nestedRedacted['context']['attempts'][0]['token'] === DefaultAuditRedactor::REDACTED_VALUE,
+    'Sensitive payload keys must be redacted recursively inside associative and list arrays.',
+);
+assert_redactor_true(
+    $nestedRedacted['context']['attempts'][0]['reason'] === 'mfa_required',
+    'Recursive redaction must preserve non-sensitive sibling metadata.',
+);
+
 $failed = false;
 
 try {
@@ -36,5 +52,28 @@ try {
 }
 
 assert_redactor_true($failed, 'Forbidden fields must fail closed.');
+
+$nestedFailed = false;
+try {
+    $redactor->redact(['context' => ['proofs' => [['password' => 'raw']]]], [], ['password']);
+} catch (InvalidArgumentException) {
+    $nestedFailed = true;
+}
+assert_redactor_true($nestedFailed, 'Forbidden payload keys must fail closed at any nesting depth.');
+
+$redactedParentFailed = false;
+try {
+    $redactor->redact(
+        ['token' => ['password' => 'raw']],
+        ['token'],
+        ['password'],
+    );
+} catch (InvalidArgumentException) {
+    $redactedParentFailed = true;
+}
+assert_redactor_true(
+    $redactedParentFailed,
+    'A redacted parent must not hide a forbidden descendant from fail-closed validation.',
+);
 
 echo "AuditRedactorRuntimeTest passed.\n";

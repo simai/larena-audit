@@ -1,0 +1,9 @@
+{
+  "schema": "larena.evidence.deviations.v1",
+  "deviations": [],
+  "non_claims": [
+    "audit_storage_redesign",
+    "frontend_ready",
+    "production_ready"
+  ]
+}

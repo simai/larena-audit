@@ -1,0 +1,12 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "package": "larena/audit",
+  "status": "proposal_only",
+  "canonical_update_allowed": false,
+  "add_capabilities": [
+    "audit.descriptor_event_taxonomy_match",
+    "audit.recursive_forbidden_payload_rejection",
+    "audit.recursive_payload_redaction"
+  ],
+  "evidence_path": "docs/project-management/evidence/administrator-access-governance/"
+}

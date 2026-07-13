@@ -23,6 +23,8 @@ final readonly class AuditEventPipeline
 
     public function route(AuditEventDescriptor $descriptor, AuditEvent $event): AuditEvent
     {
+        $this->assertDescriptorMatchesEvent($descriptor, $event);
+
         $acceptedSinks = array_values(array_filter(
             $this->sinks,
             static fn (AuditSink $sink): bool => $sink->accepts($descriptor),
@@ -54,5 +56,20 @@ final readonly class AuditEventPipeline
         }
 
         return $redactedEvent;
+    }
+
+    private function assertDescriptorMatchesEvent(AuditEventDescriptor $descriptor, AuditEvent $event): void
+    {
+        foreach ([
+            'source_package' => $descriptor->sourcePackage() === $event->sourcePackage,
+            'category' => $descriptor->category() === $event->category,
+            'type' => $descriptor->type() === $event->type,
+            'severity' => $descriptor->severity() === $event->severity,
+            'retention_class' => $descriptor->retentionClass() === $event->retentionClass,
+        ] as $field => $matches) {
+            if (!$matches) {
+                throw new InvalidArgumentException("Audit descriptor/event metadata mismatch: {$field}.");
+            }
+        }
     }
 }

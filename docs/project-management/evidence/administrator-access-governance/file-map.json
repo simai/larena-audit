@@ -1,0 +1,22 @@
+{
+  "schema": "larena.evidence.file_map.v1",
+  "package": "larena/audit",
+  "files": {
+    "runtime": [
+      "src/Runtime/AuditEventPipeline.php",
+      "src/Runtime/DefaultAuditRedactor.php"
+    ],
+    "tests": [
+      "tests/Unit/AuditEventPipelineFailsClosedTest.php",
+      "tests/Unit/AuditRedactorRuntimeTest.php",
+      "tests/Unit/DatabaseAuditSinkTest.php"
+    ],
+    "developer_contract": [
+      "docs/developer/security-audit-contract.md"
+    ],
+    "metadata": [
+      ".larena/launch-context.json",
+      "module.yaml"
+    ]
+  }
+}

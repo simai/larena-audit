@@ -72,7 +72,10 @@ try {
         severity: AuditSeverity::Info,
         retentionClass: AuditRetentionClass::Operational,
         correlationId: 'docara-publish-1',
-        payload: ['slug' => 'welcome', 'token' => 'must-not-persist'],
+        payload: [
+            'slug' => 'welcome',
+            'context' => ['attempts' => [['token' => 'must-not-persist']]],
+        ],
     ));
 
     $capsule->getDatabaseManager()->purge();
@@ -82,7 +85,10 @@ try {
     $row = $reconnected->table('larena_audit_events')->first();
     assert_database_audit_true(is_object($row), 'Audit event must persist across a new connection.');
     $payload = json_decode((string) $row->payload, true, 512, JSON_THROW_ON_ERROR);
-    assert_database_audit_true($payload['token'] === DefaultAuditRedactor::REDACTED_VALUE, 'Sensitive payload must be redacted before persistence.');
+    assert_database_audit_true(
+        $payload['context']['attempts'][0]['token'] === DefaultAuditRedactor::REDACTED_VALUE,
+        'Nested sensitive payload must be redacted before persistence.',
+    );
     assert_database_audit_true($row->event_type === 'docara.page.published', 'Event type must persist.');
 
     $migration->down();

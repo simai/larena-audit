@@ -1,9 +1,12 @@
 package: larena/audit
 title: Larena Audit
-status: coding_started
+status: implementation_written
 cluster: runtime-security
-batch: media-library-page-assets-developer-slice
+batch: administrator-access-governance
 features:
+  - audit.descriptor_event_taxonomy_match
+  - audit.recursive_forbidden_payload_rejection
+  - audit.recursive_payload_redaction
   - audit.user_role_lifecycle_events
   - audit.access_denial_events
   - audit.product_history_projection
@@ -24,4 +27,4 @@ runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/media-library-page-assets-developer-slice/
+  path: docs/project-management/evidence/administrator-access-governance/

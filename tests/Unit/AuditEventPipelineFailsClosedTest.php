@@ -87,6 +87,37 @@ try {
 assert_pipeline_fail_closed_true($forbiddenFailed, 'Forbidden payload field must fail closed.');
 assert_pipeline_fail_closed_true(count($sink->events()) === 0, 'Forbidden payload field must not be routed.');
 
+$matchingMetadata = [
+    'sourcePackage' => 'larena/auth',
+    'category' => 'security',
+    'type' => 'auth.login.denied',
+    'actor' => 'user:42',
+    'subject' => 'account:42',
+    'severity' => AuditSeverity::Security,
+    'retentionClass' => AuditRetentionClass::Security,
+    'correlationId' => 'corr-metadata',
+    'payload' => ['reason' => 'mfa_required'],
+];
+$metadataMismatches = [
+    'source package' => ['sourcePackage' => 'larena/other'],
+    'category' => ['category' => 'other'],
+    'type' => ['type' => 'other.event'],
+    'severity' => ['severity' => AuditSeverity::Info],
+    'retention class' => ['retentionClass' => AuditRetentionClass::Operational],
+];
+
+foreach ($metadataMismatches as $label => $override) {
+    $metadataFailed = false;
+    try {
+        $pipeline->route($descriptor, AuditEvent::create(...array_replace($matchingMetadata, $override)));
+    } catch (InvalidArgumentException) {
+        $metadataFailed = true;
+    }
+
+    assert_pipeline_fail_closed_true($metadataFailed, "Audit descriptor/event {$label} mismatch must fail closed.");
+    assert_pipeline_fail_closed_true(count($sink->events()) === 0, "Audit descriptor/event {$label} mismatch must not reach a sink.");
+}
+
 $rejectingSink = new InMemoryAuditSink(false);
 $noSinkPipeline = new AuditEventPipeline(new DefaultAuditRedactor(), [$rejectingSink]);
 $noSinkFailed = false;
