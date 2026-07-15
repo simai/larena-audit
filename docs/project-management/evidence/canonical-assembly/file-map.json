@@ -1,0 +1,16 @@
+{
+  "schema": "larena.package_integration_file_map.v1",
+  "package": "larena/audit",
+  "status": "implementation_written",
+  "touched_files": [
+    ".larena/launch-context.json",
+    "module.yaml",
+    "docs/project-management/launch-records/canonical-developer-alpha-integration.json",
+    "docs/project-management/evidence/canonical-assembly/*",
+    "src/Admin/AuditHistoryPresenter.php",
+    "tests/Feature/AuditHistoryAdminTest.php"
+  ],
+  "planned_changes": [
+    "No further Audit implementation change is planned; cross-package and root acceptance remain pending."
+  ]
+}

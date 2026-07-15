@@ -3,35 +3,21 @@
   "package": "larena/audit",
   "repository_class": "continuation_repository",
   "repository_contains_prior_implementation": true,
-  "launch_record_ref": "simai/larena@codex/admin-access-governance:docs/project-management/launch-records/administrator-access-governance.json",
-  "workflow_ref": "/Users/rim/Documents/GitHub/larena-workspace/source/workflow/2026-07-13-larena-administrator-access-governance.md",
+  "launch_record_ref": "docs/project-management/launch-records/canonical-developer-alpha-integration.json",
+  "workflow_ref": "simai/larena:source/workflow/2026-07-15-larena-canonical-assembly-convergence.md",
   "specs_repo": "simai/larena-specs",
   "specs_commit": "66938800984dcbd1b8bbe38be440d775ac07851f",
-  "base_commit": "c8c3a3ec9e67b8479b9e764b3207415888910f5e",
+  "base_commit": "b5f6d215fb020f7b8b071cc40b7dde4e2ed2cea1",
   "selected_features": [
-    "audit.descriptor_event_taxonomy_match",
-    "audit.recursive_forbidden_payload_rejection",
-    "audit.recursive_payload_redaction"
+    "audit.admin_history_simai_framework_table_contract"
   ],
   "allowed_files": [
     ".larena/launch-context.json",
-    "README.md",
-    "CHANGELOG.md",
-    "composer.json",
     "module.yaml",
-    "src/Runtime/AuditEventPipeline.php",
-    "src/Runtime/DefaultAuditRedactor.php",
-    "tests/Unit/AuditEventPipelineFailsClosedTest.php",
-    "tests/Unit/AuditRedactorRuntimeTest.php",
-    "tests/Unit/DatabaseAuditSinkTest.php",
-    "docs/developer/security-audit-contract.md",
-    "docs/project-management/evidence/administrator-access-governance/implementation-summary.md",
-    "docs/project-management/evidence/administrator-access-governance/tests.md",
-    "docs/project-management/evidence/administrator-access-governance/security-matrix.md",
-    "docs/project-management/evidence/administrator-access-governance/file-map.json",
-    "docs/project-management/evidence/administrator-access-governance/deviations.json",
-    "docs/project-management/evidence/administrator-access-governance/graph-sync-proposal.json",
-    "docs/project-management/evidence/administrator-access-governance/independent-review.md"
+    "src/Admin/AuditHistoryPresenter.php",
+    "tests/Feature/AuditHistoryAdminTest.php",
+    "docs/project-management/launch-records/canonical-developer-alpha-integration.json",
+    "docs/project-management/evidence/canonical-assembly/*"
   ],
   "forbidden_files": [
     "database/*",
@@ -42,36 +28,34 @@
     "../*"
   ],
   "forbidden_behavior": [
-    "descriptor_event_taxonomy_mismatch_accepted",
-    "nested_forbidden_payload_key_accepted",
-    "nested_redacted_payload_key_persisted_raw",
-    "sink_receives_unvalidated_event",
+    "accept_unlocked_simai_framework_props",
+    "weaken_source_backed_component_validation",
     "audit_storage_redesign",
-    "frontend_change",
+    "database_or_runtime_mutation",
     "production_readiness_claim"
   ],
   "required_evidence_files": [
     "implementation-summary.md",
     "tests.md",
-    "security-matrix.md",
+    "smoke.md",
     "file-map.json",
     "deviations.json",
     "graph-sync-proposal.json",
     "independent-review.md"
   ],
-  "evidence_path": "docs/project-management/evidence/administrator-access-governance/",
-  "graph_sync_proposal_path": "docs/project-management/evidence/administrator-access-governance/graph-sync-proposal.json",
+  "evidence_path": "docs/project-management/evidence/canonical-assembly/",
+  "graph_sync_proposal_path": "docs/project-management/evidence/canonical-assembly/graph-sync-proposal.json",
   "status": "implementation_written",
   "coding_allowed": true,
   "coding_started": true,
   "repository_enforcement_installed": true,
-  "review_completed": true,
-  "next_transition": "published_exact_revision",
+  "review_completed": false,
+  "next_transition": "reviewed",
   "test_database_policy": {
-    "environment": "local_test_only",
-    "database": "no_new_schema",
+    "environment": "isolated_test_only",
+    "database": "temporary_sqlite_only",
     "existing_application_database": "forbidden",
     "cleanup": "required"
   },
-  "coding_branch": "codex/admin-access-governance"
+  "coding_branch": "codex/canonical-developer-alpha-integration"
 }

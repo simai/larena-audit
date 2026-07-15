@@ -32,7 +32,9 @@ final readonly class AuditHistoryPresenter
 
         return Smart::render('sf-table', [
             'aria-label' => $this->text('region_label'),
-            'read-only' => 'true',
+            'selectable' => false,
+            'settings' => false,
+            'actions' => false,
             'data' => [
                 'columns' => [
                     ['key' => 'operation', 'label' => $this->text('columns.operation')],

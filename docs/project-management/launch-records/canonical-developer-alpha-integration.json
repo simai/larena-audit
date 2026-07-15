@@ -1,0 +1,27 @@
+{
+  "schema": "larena.package_launch_record.v1",
+  "id": "audit-canonical-developer-alpha-sf-table-contract",
+  "package": "larena/audit",
+  "status": "implementation_written",
+  "branch": "codex/canonical-developer-alpha-integration",
+  "base_commit": "b5f6d215fb020f7b8b071cc40b7dde4e2ed2cea1",
+  "specs_commit": "66938800984dcbd1b8bbe38be440d775ac07851f",
+  "root_launch_record_id": "larena.launch.canonical_assembly_integration",
+  "goal": "Keep Audit history compatible with the exact source-backed Simai Framework table contract selected by the canonical Developer Alpha assembly.",
+  "allowed_files": [
+    ".larena/launch-context.json",
+    "module.yaml",
+    "src/Admin/AuditHistoryPresenter.php",
+    "tests/Feature/AuditHistoryAdminTest.php",
+    "docs/project-management/launch-records/canonical-developer-alpha-integration.json",
+    "docs/project-management/evidence/canonical-assembly/*"
+  ],
+  "non_goals": [
+    "Audit storage redesign",
+    "Simai Framework validator weakening",
+    "database or live runtime mutation",
+    "production readiness"
+  ],
+  "rollback": "Reset only this isolated integration branch to base_commit; no application database or runtime state is touched.",
+  "evidence": "docs/project-management/evidence/canonical-assembly/"
+}
