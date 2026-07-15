@@ -13,7 +13,6 @@ use Larena\Audit\Runtime\AuditEventPipeline;
 use Larena\Audit\Runtime\DefaultAuditRedactor;
 use Larena\Audit\ReadModel\AuditHistoryReader;
 use Larena\Audit\Sinks\DatabaseAuditSink;
-use Larena\Audit\Navigation\AuditAdminNavigationContributor;
 
 final class AuditServiceProvider extends ServiceProvider
 {
@@ -57,11 +56,6 @@ final class AuditServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'larena-audit');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'larena-audit');
-
-        $registryClass = 'Larena\\Admin\\Navigation\\AdminNavigationRegistry';
-        if (class_exists($registryClass) && $this->app->bound($registryClass)) {
-            $this->app->make($registryClass)->registerContributor(new AuditAdminNavigationContributor());
-        }
 
         /** @var ConfigRepository $config */
         $config = $this->app->make(ConfigRepository::class);

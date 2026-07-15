@@ -8,6 +8,8 @@
     "docs/project-management/launch-records/canonical-developer-alpha-integration.json",
     "docs/project-management/evidence/canonical-assembly/*",
     "src/Admin/AuditHistoryPresenter.php",
+    "src/Navigation/AuditAdminNavigationContributor.php",
+    "src/Providers/AuditServiceProvider.php",
     "tests/Feature/AuditHistoryAdminTest.php"
   ],
   "planned_changes": [

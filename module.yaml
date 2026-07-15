@@ -5,6 +5,7 @@ cluster: runtime-security
 batch: canonical-developer-alpha-integration
 features:
   - audit.admin_history_simai_framework_table_contract
+  - audit.admin_navigation_integration_dependency_direction
   - audit.descriptor_event_taxonomy_match
   - audit.recursive_forbidden_payload_rejection
   - audit.recursive_payload_redaction

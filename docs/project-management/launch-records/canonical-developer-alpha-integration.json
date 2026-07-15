@@ -7,11 +7,17 @@
   "base_commit": "b5f6d215fb020f7b8b071cc40b7dde4e2ed2cea1",
   "specs_commit": "66938800984dcbd1b8bbe38be440d775ac07851f",
   "root_launch_record_id": "larena.launch.canonical_assembly_integration",
-  "goal": "Keep Audit history compatible with the exact source-backed Simai Framework table contract selected by the canonical Developer Alpha assembly.",
+  "goal": "Keep Audit history compatible with the exact source-backed Simai Framework table contract selected by the canonical Developer Alpha assembly and remove the reverse Audit-to-Admin runtime dependency while preserving the Admin navigation contribution.",
+  "selected_features": [
+    "audit.admin_history_simai_framework_table_contract",
+    "audit.admin_navigation_integration_dependency_direction"
+  ],
   "allowed_files": [
     ".larena/launch-context.json",
     "module.yaml",
     "src/Admin/AuditHistoryPresenter.php",
+    "src/Navigation/AuditAdminNavigationContributor.php",
+    "src/Providers/AuditServiceProvider.php",
     "tests/Feature/AuditHistoryAdminTest.php",
     "docs/project-management/launch-records/canonical-developer-alpha-integration.json",
     "docs/project-management/evidence/canonical-assembly/*"

@@ -18,7 +18,9 @@ all Audit unit scripts, 5 feature tests with 36 assertions, metadata sync,
 evidence validation, and exact scope validation for 13 changed files.
 
 No storage, database, route, resource, sink, read-model, validator, or
-cross-package source change is present. Root assembly and cross-package Docara
+cross-package storage change is present. The reverse Audit-to-Admin provider
+dependency is removed; the matching Admin-owned integration contributor is
+verified by the canonical root assembly. Root assembly and cross-package Docara
 acceptance remain outside this bounded package verdict.
 
 Verdict: `PASS` for the bounded Audit Simai Framework table-contract
