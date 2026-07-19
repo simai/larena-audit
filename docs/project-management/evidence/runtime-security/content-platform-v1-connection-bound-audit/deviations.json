@@ -1,0 +1,11 @@
+{
+  "schema": "larena.batch_deviations.v1",
+  "scope_deviations": [],
+  "contract_deviations": [],
+  "notes": [
+    "The accepted base revision is on origin/codex/canonical-developer-alpha-integration rather than origin/main; the committed launch record explicitly authorizes branching from that exact revision.",
+    "MySQL credentials remain in an ignored, untracked, private-permission local file and are not included in commands, output or evidence.",
+    "The default package test invokes the MySQL entrypoint in explicit-opt-in skip mode; acceptance separately executed the real opt-in MySQL command."
+  ],
+  "production_readiness_claimed": false
+}

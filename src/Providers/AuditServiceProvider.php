@@ -9,7 +9,9 @@ use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\ServiceProvider;
 use Larena\Audit\Contracts\AuditSink;
+use Larena\Audit\Contracts\ConnectionBoundAuditEventPipeline;
 use Larena\Audit\Runtime\AuditEventPipeline;
+use Larena\Audit\Runtime\DatabaseAuditEventPipeline;
 use Larena\Audit\Runtime\DefaultAuditRedactor;
 use Larena\Audit\ReadModel\AuditHistoryReader;
 use Larena\Audit\Sinks\DatabaseAuditSink;
@@ -32,6 +34,13 @@ final class AuditServiceProvider extends ServiceProvider
                 [$app->make(DatabaseAuditSink::class)],
             );
         });
+        $this->app->bind(DatabaseAuditEventPipeline::class, static function (Application $app): DatabaseAuditEventPipeline {
+            /** @var DatabaseManager $database */
+            $database = $app->make(DatabaseManager::class);
+
+            return new DatabaseAuditEventPipeline($database->connection());
+        });
+        $this->app->alias(DatabaseAuditEventPipeline::class, ConnectionBoundAuditEventPipeline::class);
         $this->app->bind(AuditHistoryReader::class, static function (Application $app): AuditHistoryReader {
             /** @var DatabaseManager $database */
             $database = $app->make(DatabaseManager::class);

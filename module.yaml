@@ -1,9 +1,10 @@
 package: larena/audit
 title: Larena Audit
-status: implementation_written
+status: reviewed
 cluster: runtime-security
-batch: canonical-developer-alpha-integration
+batch: audit-content-platform-v1-connection-bound-pipeline
 features:
+  - audit.connection_bound_database_pipeline
   - audit.admin_history_simai_framework_table_contract
   - audit.admin_navigation_integration_dependency_direction
   - audit.descriptor_event_taxonomy_match
@@ -29,4 +30,4 @@ runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/canonical-assembly/
+  path: docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/

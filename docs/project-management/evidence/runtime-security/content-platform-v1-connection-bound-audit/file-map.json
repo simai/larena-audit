@@ -1,0 +1,19 @@
+{
+  "schema": "larena.batch_file_map.v1",
+  "files": {
+    ".larena/launch-context.json": "activates the exact committed bounded launch and records its successful action gate",
+    ".larena/spec-ref.json": "pins the committed Specs launch revision",
+    "README.md": "documents the proof-bearing database pipeline and compatibility boundary",
+    "composer.json": "adds focused and explicit-opt-in MySQL test scripts without dependency or platform drift",
+    "module.yaml": "records the active batch, capability and evidence path",
+    "docs/developer/security-audit-contract.md": "documents exact connection identity, caller transaction ownership and failure semantics",
+    "src/Contracts/ConnectionBoundAuditEventPipeline.php": "defines the exact proof-bearing public API",
+    "src/Runtime/DatabaseAuditEventPipeline.php": "composes one default redactor and one database sink on the exact connection",
+    "src/Providers/AuditServiceProvider.php": "adds concrete and contract bindings while preserving generic bindings",
+    "tests/Unit/DatabaseAuditEventPipelineTest.php": "proves composition, identity, redaction, propagation, transaction behavior and reconnect persistence",
+    "tests/Feature/DatabaseAuditEventPipelineBindingTest.php": "proves provider identity and unchanged generic binding composition",
+    "tests/Integration/DatabaseAuditEventPipelineMySqlTestSupport.php": "provides guarded local credentials, connection and cleanup helpers",
+    "tests/Integration/DatabaseAuditEventPipelineMySqlTest.php": "proves real disposable MySQL durability, rollback, reconnect and cleanup",
+    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/*": "records bounded implementation, tests, smoke, review and graph-sync evidence"
+  }
+}

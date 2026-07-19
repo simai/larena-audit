@@ -37,8 +37,10 @@
         "phpstan/phpstan": "^2.0"
     },
     "scripts": {
-        "test": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php && php tests/Unit/DatabaseAuditSinkTest.php && php vendor/bin/phpunit tests/Feature/AuditHistoryAdminTest.php",
-        "test:unit": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php && php tests/Unit/DatabaseAuditSinkTest.php",
+        "test": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php && php tests/Unit/DatabaseAuditSinkTest.php && php tests/Unit/DatabaseAuditEventPipelineTest.php && php vendor/bin/phpunit tests/Feature/AuditHistoryAdminTest.php tests/Feature/DatabaseAuditEventPipelineBindingTest.php && php tests/Integration/DatabaseAuditEventPipelineMySqlTest.php",
+        "test:unit": "php tests/Unit/AuditEventContractTest.php && php tests/Unit/AuditFailsClosedTest.php && php tests/Unit/AuditRedactorRuntimeTest.php && php tests/Unit/AuditEventPipelineTest.php && php tests/Unit/AuditEventPipelineFailsClosedTest.php && php tests/Unit/InstallAuditTrailTest.php && php tests/Unit/DatabaseAuditSinkTest.php && php tests/Unit/DatabaseAuditEventPipelineTest.php",
+        "test:connection-bound": "php tests/Unit/DatabaseAuditEventPipelineTest.php && php vendor/bin/phpunit tests/Feature/DatabaseAuditEventPipelineBindingTest.php --colors=never",
+        "test:mysql-connection-bound": "LARENA_AUDIT_CONNECTION_BOUND_MYSQL_TEST=1 php tests/Integration/DatabaseAuditEventPipelineMySqlTest.php",
         "lint": "php scripts/lint.php",
         "analyse": "php vendor/bin/phpstan analyse --configuration=phpstan.neon.dist --no-progress --memory-limit=512M",
         "validate:larena": "php scripts/validate-larena-package.php",

@@ -22,3 +22,43 @@ Security-sensitive producers should test all three boundaries:
 1. descriptor/event metadata mismatch never reaches a sink;
 2. nested forbidden fields reject the event;
 3. nested redacted fields reach persistent storage only as `[redacted]`.
+
+## Connection-bound durable pipeline
+
+Integrations that require same-transaction durability must resolve
+`Larena\Audit\Contracts\ConnectionBoundAuditEventPipeline`. Its default
+implementation is `Larena\Audit\Runtime\DatabaseAuditEventPipeline`.
+
+The contract exposes:
+
+```php
+public function connection(): ConnectionInterface;
+
+public function route(
+    AuditEventDescriptor $descriptor,
+    AuditEvent $event,
+): AuditEvent;
+```
+
+`connection()` returns the exact object passed to the implementation. The
+implementation composes the existing generic pipeline with
+`DefaultAuditRedactor` and exactly one `DatabaseAuditSink` on that same
+connection.
+
+Before opening a caller-owned transaction, an integrating coordinator may use
+strict object identity to reject mismatched database participants. A
+connection name, driver name or equivalent configuration is not sufficient
+proof that writes share one active transaction.
+
+The Audit package does not begin, commit or roll back the transaction. A
+successful route participates in the caller's current transaction. Caller
+rollback removes the Audit row and caller commit preserves it. Descriptor,
+forbidden-field, redaction, JSON and database failures propagate without a
+synthetic success result.
+
+The connection-bound contract intentionally has no arbitrary sink injection,
+fan-out, fallback or external transport. External delivery requires a separate
+outbox contract and cannot be represented as same-connection durability.
+
+The generic `AuditEventPipeline` remains supported for existing integrations,
+but it does not expose or prove database connection identity.

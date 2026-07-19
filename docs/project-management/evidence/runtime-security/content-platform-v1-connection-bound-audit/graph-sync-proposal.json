@@ -1,0 +1,29 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "canonical_update_allowed": false,
+  "proposal_status": "candidate_after_independent_review",
+  "observed_capabilities": [
+    "audit.connection_bound_database_pipeline",
+    "audit.exact_database_connection_identity",
+    "audit.caller_transaction_participation"
+  ],
+  "proposed_relations": [
+    {
+      "from": "audit.connection_bound_database_pipeline",
+      "relation": "implements",
+      "to": "audit.events"
+    },
+    {
+      "from": "audit.connection_bound_database_pipeline",
+      "relation": "uses",
+      "to": "audit.database_sink"
+    }
+  ],
+  "limitations": [
+    "database_sink_only",
+    "no_external_or_multiple_sink_proof",
+    "no_transaction_ownership",
+    "content_platform_v1_compatibility_prerequisite_only",
+    "no_production_readiness_claim"
+  ]
+}
