@@ -3,12 +3,12 @@
   "package": "larena/audit",
   "repository_class": "continuation_repository",
   "repository_contains_prior_implementation": true,
-  "launch_record_ref": "simai/larena-specs@6edd05f86692068ef234536f6c3a5d6ca601e87a:specs/implementation-planning/launch-records/audit-content-platform-v1-connection-bound-pipeline.json",
-  "launch_record_commit": "6edd05f86692068ef234536f6c3a5d6ca601e87a",
+  "launch_record_ref": "simai/larena-specs@97c2bc1e201d9bf4dea99c8e76b518afc404c620:specs/implementation-planning/launch-records/audit-canonical-operator-history-completeness-v1.json",
+  "launch_record_commit": "97c2bc1e201d9bf4dea99c8e76b518afc404c620",
   "specs_repo": "simai/larena-specs",
-  "specs_commit": "6edd05f86692068ef234536f6c3a5d6ca601e87a",
-  "base_commit": "34dbed932a6c1f2e0312f9b8d3642d35c5a8b83c",
-  "branch": "codex/content-platform-v1-connection-bound-audit",
+  "specs_commit": "97c2bc1e201d9bf4dea99c8e76b518afc404c620",
+  "base_commit": "ab2546b1a0fdd577faba895755a3d6c44f0f9da8",
+  "branch": "main",
   "selected_features": [
     "audit.events",
     "audit.retention_sinks"
@@ -16,26 +16,16 @@
   "allowed_files": [
     ".larena/launch-context.json",
     ".larena/spec-ref.json",
-    "README.md",
-    "composer.json",
     "module.yaml",
-    "docs/developer/security-audit-contract.md",
-    "src/Contracts/ConnectionBoundAuditEventPipeline.php",
-    "src/Providers/AuditServiceProvider.php",
-    "src/Runtime/DatabaseAuditEventPipeline.php",
-    "tests/Unit/DatabaseAuditEventPipelineTest.php",
-    "tests/Feature/DatabaseAuditEventPipelineBindingTest.php",
-    "tests/Integration/DatabaseAuditEventPipelineMySqlTestSupport.php",
-    "tests/Integration/DatabaseAuditEventPipelineMySqlTest.php",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/README.md",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/implementation-summary.md",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/tests.md",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/smoke.md",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/file-map.json",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/deviations.json",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/graph-sync-proposal.json",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/code-review-feedback.md",
-    "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/independent-review.md"
+    "src/ReadModel/AuditHistoryReader.php",
+    "tests/Feature/AuditHistoryAdminTest.php",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/README.md",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/implementation-summary.md",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/tests.md",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/smoke.md",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/file-map.json",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/deviations.json",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/graph-sync-proposal.json"
   ],
   "forbidden_files": [
     "database/*",
@@ -43,6 +33,7 @@
     "routes/*",
     "resources/*",
     "composer.lock",
+    "README.md",
     "CHANGELOG.md",
     "scripts/*",
     "src/Contracts/AuditEvent.php",
@@ -62,6 +53,7 @@
     "synthetic_success",
     "existing_generic_audit_binding_removal_or_semantic_change",
     "new_event_taxonomy_or_content_descriptor",
+    "raw_payload_rendering",
     "migration_route_ui_release_deployment_or_live_database_change"
   ],
   "required_evidence_files": [
@@ -71,27 +63,20 @@
     "smoke.md",
     "file-map.json",
     "deviations.json",
-    "graph-sync-proposal.json",
-    "code-review-feedback.md",
-    "independent-review.md"
+    "graph-sync-proposal.json"
   ],
-  "evidence_path": "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/",
-  "graph_sync_proposal_path": "docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/graph-sync-proposal.json",
+  "evidence_path": "docs/project-management/evidence/canonical-operator-history-completeness-v1/",
+  "graph_sync_proposal_path": "docs/project-management/evidence/canonical-operator-history-completeness-v1/graph-sync-proposal.json",
   "status": "reviewed",
   "coding_allowed": true,
   "coding_started": true,
   "repository_enforcement_installed": true,
   "review_completed": true,
-  "independent_review_verdict": "pass",
-  "independent_review_findings": {
-    "p0": 0,
-    "p1": 0,
-    "p2": 0
-  },
+  "review_verdict": "pass",
   "action_gate": {
     "status": "success",
     "phase": "preflight",
-    "evidence_ref": "source/output/action-gates/action-gate-report-20260719151231.json"
+    "evidence_ref": "source/output/action-gates/action-gate-report-20260726172642.json"
   },
   "runtime_toolchain": {
     "status": "ok",
@@ -107,7 +92,7 @@
     "existing_application_database": "forbidden",
     "cleanup": "required"
   },
-  "coding_branch": "codex/content-platform-v1-connection-bound-audit",
+  "coding_branch": "main",
   "next_transition": "package_commit_and_publication",
-  "remote_push_status": "branch_not_pushed"
+  "remote_push_status": "pending_current_commit"
 }

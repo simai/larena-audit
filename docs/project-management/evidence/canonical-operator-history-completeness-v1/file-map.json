@@ -1,0 +1,16 @@
+{
+  "schema": "larena.evidence_file_map.v1",
+  "files": [
+    ".larena/launch-context.json",
+    "module.yaml",
+    "src/ReadModel/AuditHistoryReader.php",
+    "tests/Feature/AuditHistoryAdminTest.php",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/README.md",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/implementation-summary.md",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/tests.md",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/smoke.md",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/file-map.json",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/deviations.json",
+    "docs/project-management/evidence/canonical-operator-history-completeness-v1/graph-sync-proposal.json"
+  ]
+}

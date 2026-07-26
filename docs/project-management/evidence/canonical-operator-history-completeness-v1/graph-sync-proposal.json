@@ -1,0 +1,6 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "status": "no_canonical_graph_change_required",
+  "canonical_update_allowed": false,
+  "reason": "The correction exposes existing Audit-owned Docara lifecycle events and does not add or change capabilities, ownership, dependencies or event taxonomy."
+}

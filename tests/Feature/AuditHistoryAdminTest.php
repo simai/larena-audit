@@ -33,7 +33,18 @@ final class AuditHistoryAdminTest extends TestCase
             'status' => 'published',
             'version' => 2,
         ]);
-        $this->insertEvent(3, 'unrelated_event', ['slug' => 'not-visible'], 'larena/auth', 'identity');
+        $this->insertEvent(3, 'docara_page_submitted_for_review', [
+            'operation' => 'submitted_for_review',
+            'status' => 'review',
+            'body' => 'REVIEW BODY MUST STAY PRIVATE',
+        ]);
+        $this->insertEvent(4, 'docara_page_restored', [
+            'operation' => 'restored',
+            'source_revision' => 1,
+            'revision' => 6,
+            'token' => 'restore-token-must-not-render',
+        ]);
+        $this->insertEvent(5, 'unrelated_event', ['slug' => 'not-visible'], 'larena/auth', 'identity');
 
         $response = $this->get('/admin/audit');
 
@@ -43,17 +54,19 @@ final class AuditHistoryAdminTest extends TestCase
             ->assertSee('selectable="false"', false)
             ->assertSee('settings="false"', false)
             ->assertSee('actions="false"', false)
-            ->assertSeeInOrder(['Published', 'Created'])
+            ->assertSeeInOrder(['Restored', 'Submitted for publication', 'Published', 'Created'])
             ->assertSee('\u003Cwelcome\u003E', false)
             ->assertSee('user:admin_identity:1')
             ->assertSee('published')
             ->assertDontSee('TOP SECRET BODY')
             ->assertDontSee('do-not-render')
+            ->assertDontSee('REVIEW BODY MUST STAY PRIVATE')
+            ->assertDontSee('restore-token-must-not-render')
             ->assertDontSee('unsafe')
             ->assertDontSee('not-visible')
             ->assertDontSee('"payload"');
 
-        self::assertSame(3, DB::table('larena_audit_events')->count());
+        self::assertSame(5, DB::table('larena_audit_events')->count());
     }
 
     public function testDefaultRouteContractRequiresAuthenticatedAdministrator(): void

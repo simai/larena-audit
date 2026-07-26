@@ -2,7 +2,7 @@ package: larena/audit
 title: Larena Audit
 status: reviewed
 cluster: runtime-security
-batch: audit-content-platform-v1-connection-bound-pipeline
+batch: audit-canonical-operator-history-completeness-v1
 features:
   - audit.connection_bound_database_pipeline
   - audit.admin_history_simai_framework_table_contract
@@ -30,4 +30,4 @@ runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/runtime-security/content-platform-v1-connection-bound-audit/
+  path: docs/project-management/evidence/canonical-operator-history-completeness-v1/

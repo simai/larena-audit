@@ -48,7 +48,8 @@ final readonly class AuditHistoryReader
             ->where(static function ($query): void {
                 $query->whereIn('event_type', [
                     'docara_page_created', 'docara_page_updated', 'docara_page_published',
-                    'docara_page_unpublished', 'docara_page_update_denied',
+                    'docara_page_unpublished', 'docara_page_submitted_for_review',
+                    'docara_page_restored', 'docara_page_update_denied',
                     'file_uploaded', 'file_metadata_updated', 'file_deleted', 'file_used',
                 ])->orWhere('event_type', 'like', 'auth.%')
                     ->orWhere('event_type', 'like', 'access.%');
@@ -129,6 +130,8 @@ final readonly class AuditHistoryReader
             'docara_page_updated' => 'Updated',
             'docara_page_published' => 'Published',
             'docara_page_unpublished' => 'Unpublished',
+            'docara_page_submitted_for_review' => 'Submitted for publication',
+            'docara_page_restored' => 'Restored',
             'docara_page_update_denied' => 'Permission denied',
             'file_uploaded' => 'File uploaded',
             'file_metadata_updated' => 'File metadata updated',
