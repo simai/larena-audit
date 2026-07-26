@@ -3,6 +3,8 @@
   "files": [
     ".larena/launch-context.json",
     "module.yaml",
+    "resources/lang/en/admin.php",
+    "resources/lang/ru/admin.php",
     "src/ReadModel/AuditHistoryReader.php",
     "tests/Feature/AuditHistoryAdminTest.php",
     "docs/project-management/evidence/canonical-operator-history-completeness-v1/README.md",

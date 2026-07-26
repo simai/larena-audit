@@ -55,6 +55,7 @@ final class AuditHistoryAdminTest extends TestCase
             ->assertSee('settings="false"', false)
             ->assertSee('actions="false"', false)
             ->assertSeeInOrder(['Restored', 'Submitted for publication', 'Published', 'Created'])
+            ->assertDontSee('larena-audit::admin.operations')
             ->assertSee('\u003Cwelcome\u003E', false)
             ->assertSee('user:admin_identity:1')
             ->assertSee('published')
@@ -100,12 +101,22 @@ final class AuditHistoryAdminTest extends TestCase
 
     public function testHistorySurfaceHasRussianTranslationParity(): void
     {
+        $this->insertEvent(1, 'docara_page_submitted_for_review', [
+            'operation' => 'submitted_for_review',
+            'status' => 'review',
+        ]);
+        $this->insertEvent(2, 'docara_page_restored', [
+            'operation' => 'restored',
+            'source_revision' => 1,
+        ]);
         $this->app->setLocale('ru');
 
         $this->get('/admin/audit')
             ->assertOk()
             ->assertSee('История действий')
-            ->assertSee('Действий со страницами пока нет');
+            ->assertSee('Восстановление версии')
+            ->assertSee('Передано на публикацию')
+            ->assertDontSee('larena-audit::admin.operations');
     }
 
     /** @param array<string, mixed> $payload */
