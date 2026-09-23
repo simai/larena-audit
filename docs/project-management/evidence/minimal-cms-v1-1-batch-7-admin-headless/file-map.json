@@ -1,0 +1,21 @@
+{
+  "schema": "larena.batch_evidence.v1",
+  "batch": "batch-7-admin-headless",
+  "wave": "C",
+  "package": "larena/audit",
+  "status": "evidence",
+  "files": [
+    {
+      "path": "composer.json",
+      "change": "larena/ui moved from require to suggest; kept in require-dev"
+    },
+    {
+      "path": "composer.lock",
+      "change": "larena/ui and larena/dataview moved to packages-dev; content-hash recomputed"
+    },
+    {
+      "path": "src/Providers/AuditServiceProvider.php",
+      "change": "history routes guarded by class_exists(Larena\\Ui\\Smart)"
+    }
+  ]
+}

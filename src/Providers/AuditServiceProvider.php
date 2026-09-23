@@ -68,8 +68,12 @@ final class AuditServiceProvider extends ServiceProvider
 
         /** @var ConfigRepository $config */
         $config = $this->app->make(ConfigRepository::class);
+        // The history screen is the only thing in audit that renders anything, and
+        // it renders with larena/ui. Without UI — a headless composition — audit
+        // still records, reads and pipelines events; it just has no screen.
         if ($this->app->environment((array) $config->get('larena-audit.admin.allowed_environments', ['local', 'testing']))
-            && (bool) $config->get('larena-audit.admin.enabled', false)) {
+            && (bool) $config->get('larena-audit.admin.enabled', false)
+            && class_exists(\Larena\Ui\Smart::class)) {
             $this->loadRoutesFrom(__DIR__ . '/../../routes/admin.php');
         }
     }

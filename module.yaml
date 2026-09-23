@@ -1,8 +1,8 @@
 package: larena/audit
 title: Larena Audit
-status: reviewed
+status: coding_started
 cluster: runtime-security
-batch: audit-canonical-operator-history-completeness-v1
+batch: minimal-cms-v1-1-batch-7-wave-c-audit-ui-optional
 features:
   - audit.connection_bound_database_pipeline
   - audit.admin_history_simai_framework_table_contract
@@ -30,4 +30,4 @@ runtime:
   php: "^8.3"
   laravel: "^13.0"
 evidence:
-  path: docs/project-management/evidence/canonical-operator-history-completeness-v1/
+  path: docs/project-management/evidence/minimal-cms-v1-1-batch-7-admin-headless

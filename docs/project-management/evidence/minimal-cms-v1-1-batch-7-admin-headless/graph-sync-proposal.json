@@ -1,0 +1,15 @@
+{
+  "schema": "larena.graph_sync_proposal.v1",
+  "batch": "batch-7-admin-headless",
+  "wave": "C",
+  "package": "larena/audit",
+  "status": "evidence",
+  "canonical_update_allowed": false,
+  "canonical_update_reason": "a package coding wave never writes the canonical graph",
+  "feature_observations": [
+    {
+      "feature": "audit.events",
+      "observation": "larena/ui is optional; the history screen needs it, event recording does not"
+    }
+  ]
+}

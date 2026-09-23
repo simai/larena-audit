@@ -14,9 +14,11 @@
         "illuminate/routing": "^13.0",
         "illuminate/support": "^13.0",
     "illuminate/view": "^13.0",
-    "larena/ui": "dev-main",
     "php": "^8.3"
   },
+    "suggest": {
+        "larena/ui": "Renders the administrator audit history screen. Audit records, reads and pipelines events without it."
+    },
   "repositories": [
     {"type": "path", "url": "../ui", "options": {"symlink": true}},
     {"type": "path", "url": "../dataview", "options": {"symlink": true}}
@@ -33,6 +35,7 @@
     },
     "require-dev": {
         "laravel/framework": "^13.0",
+        "larena/ui": "dev-main",
         "orchestra/testbench": "^11.0",
         "phpstan/phpstan": "^2.0"
     },

@@ -1,0 +1,15 @@
+{
+  "schema": "larena.batch_evidence.v1",
+  "batch": "batch-7-admin-headless",
+  "wave": "C",
+  "package": "larena/audit",
+  "status": "evidence",
+  "deviations": [
+    {
+      "id": "lock_hand_edited",
+      "what": "composer.lock edited without composer update",
+      "why": "the package's path repositories lack ../core, which the current ui and dataview require, so composer cannot resolve here; pre-existing",
+      "effect": "only the two entries move to packages-dev and the content-hash changes; composer validate passes"
+    }
+  ]
+}
