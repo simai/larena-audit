@@ -15,7 +15,8 @@ final readonly class AuditHistoryAdminController
         $events = $history->events();
         return view('larena-audit::admin.index', [
             'events' => $events,
-            'historyUi' => $presenter->present($events),
+            'emptyUi' => $presenter->empty($events),
+            'historyList' => $presenter->list($events),
         ]);
     }
 }

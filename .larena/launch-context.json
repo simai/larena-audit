@@ -19,7 +19,12 @@
     "docs/project-management/evidence/minimal-cms-v1-1-batch-7-admin-headless/*",
     "docs/project-management/launch-records/minimal-cms-v1-1-batch-7-wave-c-audit-ui-optional.json",
     "module.yaml",
-    "src/Providers/AuditServiceProvider.php"
+    "src/Providers/AuditServiceProvider.php",
+    "resources/views/admin/index.blade.php",
+    "src/Admin/AuditHistoryPresenter.php",
+    "src/Http/Controllers/AuditHistoryAdminController.php",
+    "tests/Feature/AuditHistoryAdminTest.php",
+    "tests/Fixtures/views/dataview/list.blade.php"
   ],
   "forbidden_files": [
     "database/*",

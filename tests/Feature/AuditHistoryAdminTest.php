@@ -50,13 +50,12 @@ final class AuditHistoryAdminTest extends TestCase
 
         $response->assertOk()
             ->assertSee('data-larena-audit-history="persistent"', false)
-            ->assertDontSee(' read-only=', false)
-            ->assertSee('selectable="false"', false)
-            ->assertSee('settings="false"', false)
-            ->assertSee('actions="false"', false)
+            // The events reach the admin shell's shared list as a plain description.
+            ->assertSee('data-larena-fixture-list="audit-history"', false)
+            ->assertSee('data-page-id="page.admin.audit-history"', false)
             ->assertSeeInOrder(['Restored', 'Submitted for publication', 'Published', 'Created'])
             ->assertDontSee('larena-audit::admin.operations')
-            ->assertSee('\u003Cwelcome\u003E', false)
+            ->assertSee('<welcome>')
             ->assertSee('user:admin_identity:1')
             ->assertSee('published')
             ->assertDontSee('TOP SECRET BODY')
