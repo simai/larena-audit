@@ -21,6 +21,10 @@ final class AuditServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/larena-audit.php', 'larena-audit');
+        // Core installs record their install audit trail here; without Core nothing is registered.
+        if (interface_exists(\Larena\Core\Contracts\InstallAuditTrailAdapter::class)) {
+            $this->app->singletonIf(\Larena\Core\Contracts\InstallAuditTrailAdapter::class, \Larena\Audit\Install\CoreInstallAuditTrailAdapter::class);
+        }
         $this->app->bind(DatabaseAuditSink::class, static function (Application $app): DatabaseAuditSink {
             /** @var DatabaseManager $database */
             $database = $app->make(DatabaseManager::class);

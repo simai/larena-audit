@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a9ee0fee6b1c67275941ef1fca22497b",
+    "content-hash": "b4f431c9396bc19e6855d0fd5570be33",
     "packages": [
         {
             "name": "brick/math",
@@ -6314,14 +6314,189 @@
             "time": "2026-03-17T14:54:13+00:00"
         },
         {
+            "name": "larena/core",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../core",
+                "reference": "707790e8a5817182bc07618353d2ab7fa09ff069"
+            },
+            "require": {
+                "illuminate/console": "^13.0",
+                "illuminate/database": "^13.0",
+                "illuminate/support": "^13.0",
+                "php": "^8.3",
+                "symfony/yaml": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "larena/access": "dev-main",
+                "larena/audit": "dev-main",
+                "larena/licensing": "dev-main",
+                "phpstan/phpstan": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Larena\\Core\\Providers\\CoreServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Larena\\Core\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Larena\\Core\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "@php tests/Unit/OperationRuntimeContractTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/CatalogOperationExecutionTest.php",
+                    "@php tests/Unit/OperationRuntimeFailsClosedTest.php",
+                    "@php tests/Unit/SyncOperationRuntimeTest.php",
+                    "@php tests/Unit/SyncOperationRuntimeFailsClosedTest.php",
+                    "@php tests/Unit/SyncOperationRuntimeTransactionBoundaryTest.php",
+                    "@php tests/Unit/RuntimeSecurityCompositionTest.php",
+                    "@php tests/Unit/RuntimeSecurityCompositionFailsClosedTest.php",
+                    "@php tests/Unit/FoundationPackageSetTest.php",
+                    "@php tests/Unit/InstallReadinessContractTest.php",
+                    "@php tests/Unit/InstallApplyLaunchRecordTest.php",
+                    "@php tests/Unit/PackageRegistrySeedTest.php",
+                    "@php tests/Unit/InstallerPersistenceFoundationTest.php",
+                    "@php tests/Unit/InstallerDbSchemaApplyTest.php",
+                    "@php tests/Unit/InstallAuditTrailApplyTest.php",
+                    "@php tests/Unit/PackageRegistryDiagnosticsTest.php",
+                    "@php tests/Unit/RuntimeSecurityClusterSmokeTest.php",
+                    "@php tests/Unit/DataContentClusterSmokeTest.php",
+                    "@php tests/Unit/CommandReportPresenterTest.php",
+                    "@php tests/Unit/StarterEvidencePathTest.php",
+                    "@php tests/Unit/CoreAssetActivationContractTest.php",
+                    "@php tests/Unit/VerifiedAssetBundlePublisherTest.php",
+                    "@php tests/Unit/FirstRunCoordinatorTest.php",
+                    "@php tests/Unit/FirstRunPreflightServiceTest.php",
+                    "@php tests/Unit/WebInstallStateStoreTest.php",
+                    "@php tests/Unit/WebInstallCoordinatorRecoveryTest.php",
+                    "@php tests/Unit/MinimalCmsDependencyContractTest.php",
+                    "@php tests/Unit/MinimalCmsCoreBoundaryTest.php",
+                    "@php tests/Unit/ScopeRefTest.php",
+                    "@php tests/Unit/ScopeRegistryTest.php",
+                    "@php tests/Unit/ScopeRegistryFailsClosedTest.php",
+                    "@php tests/Unit/PlaneRegistryTest.php",
+                    "@php tests/Unit/PlaneNodeMoveTest.php",
+                    "@php tests/Unit/PlaneNodeMoveFailsClosedTest.php",
+                    "@php tests/Unit/MembershipResolverTest.php",
+                    "@php tests/Unit/MembershipResolverDescendantsTest.php",
+                    "@php tests/Unit/ScopeBaselineInstallerIdempotencyTest.php",
+                    "@php tests/Unit/ScopePlaneAuditEventTest.php",
+                    "@php tests/Unit/OperationDescriptorRiskClassDefaultTest.php",
+                    "@php tests/Unit/OperationDeclarationLoaderTest.php",
+                    "@php tests/Unit/OperationDeclarationLoaderFailsClosedTest.php",
+                    "@php tests/Unit/DeclaredOperationRegistryTest.php",
+                    "@php tests/Unit/DescriptorPolicyTest.php",
+                    "@php tests/Unit/ConfirmationPolicyTest.php",
+                    "@php tests/Unit/ProposalAndApprovalTest.php",
+                    "@php tests/Unit/ProposalFailsClosedTest.php",
+                    "@php tests/Unit/TransportResolutionTest.php",
+                    "@php tests/Unit/TransportGateMatrixTest.php",
+                    "@php tests/Unit/PackageDescriptorFileValidatorTest.php",
+                    "@php tests/Unit/OperationCoverageReportTest.php",
+                    "@php tests/Unit/EnvironmentProfileTest.php",
+                    "@php tests/Unit/EnvironmentDetectionTest.php",
+                    "@php tests/Unit/EnvironmentVerificationTest.php",
+                    "@php tests/Unit/EnvironmentFailsClosedTest.php",
+                    "@php tests/Unit/SolutionManifestValidationTest.php",
+                    "@php tests/Unit/SolutionPlannerConflictTest.php",
+                    "@php tests/Unit/SolutionTopologyTest.php",
+                    "@php tests/Unit/SolutionFailsClosedTest.php"
+                ],
+                "test:unit": [
+                    "@php tests/Unit/OperationRuntimeContractTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/CatalogOperationExecutionTest.php",
+                    "@php tests/Unit/OperationRuntimeFailsClosedTest.php",
+                    "@php tests/Unit/SyncOperationRuntimeTest.php",
+                    "@php tests/Unit/SyncOperationRuntimeFailsClosedTest.php",
+                    "@php tests/Unit/SyncOperationRuntimeTransactionBoundaryTest.php",
+                    "@php tests/Unit/RuntimeSecurityCompositionTest.php",
+                    "@php tests/Unit/RuntimeSecurityCompositionFailsClosedTest.php",
+                    "@php tests/Unit/FoundationPackageSetTest.php",
+                    "@php tests/Unit/InstallReadinessContractTest.php",
+                    "@php tests/Unit/InstallApplyLaunchRecordTest.php",
+                    "@php tests/Unit/PackageRegistrySeedTest.php",
+                    "@php tests/Unit/InstallerPersistenceFoundationTest.php",
+                    "@php tests/Unit/InstallerDbSchemaApplyTest.php",
+                    "@php tests/Unit/InstallAuditTrailApplyTest.php",
+                    "@php tests/Unit/PackageRegistryDiagnosticsTest.php",
+                    "@php tests/Unit/RuntimeSecurityClusterSmokeTest.php",
+                    "@php tests/Unit/DataContentClusterSmokeTest.php",
+                    "@php tests/Unit/CommandReportPresenterTest.php",
+                    "@php tests/Unit/StarterEvidencePathTest.php",
+                    "@php tests/Unit/CoreAssetActivationContractTest.php",
+                    "@php tests/Unit/VerifiedAssetBundlePublisherTest.php",
+                    "@php tests/Unit/FirstRunCoordinatorTest.php",
+                    "@php tests/Unit/FirstRunPreflightServiceTest.php",
+                    "@php tests/Unit/WebInstallStateStoreTest.php",
+                    "@php tests/Unit/WebInstallCoordinatorRecoveryTest.php",
+                    "@php tests/Unit/MinimalCmsDependencyContractTest.php",
+                    "@php tests/Unit/MinimalCmsCoreBoundaryTest.php"
+                ],
+                "lint": [
+                    "@php scripts/lint.php"
+                ],
+                "analyse": [
+                    "@php scripts/analyse.php"
+                ],
+                "validate:larena": [
+                    "@php scripts/validate-larena-package.php"
+                ],
+                "evidence:check": [
+                    "@php scripts/check-evidence.php"
+                ],
+                "scope:check": [
+                    "@php tools/larena-scope-check.php"
+                ],
+                "quality:gate": [
+                    "@validate:larena",
+                    "@lint",
+                    "@analyse",
+                    "@test",
+                    "@larena:metadata:check",
+                    "@evidence:check",
+                    "@scope:check"
+                ],
+                "larena:metadata:check": [
+                    "@php scripts/check-metadata-sync.php"
+                ]
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Rim Zabarov",
+                    "homepage": "https://github.com/zabarov"
+                }
+            ],
+            "description": "Larena Core: Platform foundation for package registry, operation runtime, compatibility, SitePack portable data standard and shared contracts.",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "larena/dataview",
             "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "../dataview",
-                "reference": "b84e964b4ed78e1ca08a46c88e7651b02744ee47"
+                "reference": "a838384e9dc3b143116a9c60dff3eb952feaac9b"
             },
             "require": {
+                "larena/core": "dev-main",
+                "larena/property": "dev-main",
                 "php": "^8.3"
             },
             "require-dev": {
@@ -6343,7 +6518,19 @@
                     "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewContractTest.php",
                     "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewFailsClosedTest.php",
                     "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/ReadOnlyDataviewTableAdapterTest.php",
-                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewTableRuntimeTest.php"
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewTableRuntimeTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewSixViewRuntimeTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewWorkbenchFixtureTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewDescriptorNormalizerTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Integration/DataviewDescriptorPersistenceTest.php",
+                    "@php tests/Unit/MinimalCmsDependencyContractTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/RegisteredQueryBoundaryTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/RegisteredPagedSourceTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/RegisteredSearchTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/RegisteredSmartQueryCodecTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/RegisteredDataviewSourceRegistryTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewQueryCarryOverTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/DataviewRoleBinderTest.php"
                 ],
                 "test:unit": [
                     "@test"
@@ -6388,18 +6575,125 @@
             }
         },
         {
+            "name": "larena/property",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../property",
+                "reference": "f65556dee64c2b5ee8ffae73f37cc12d72e3772b"
+            },
+            "require": {
+                "illuminate/console": "^13.0",
+                "illuminate/http": "^13.0",
+                "illuminate/support": "^13.0",
+                "illuminate/view": "^13.0",
+                "larena/core": "dev-main",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "larena/access": "dev-main",
+                "larena/audit": "dev-main",
+                "larena/licensing": "dev-main",
+                "phpstan/phpstan": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Larena\\Property\\Providers\\PropertyServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Larena\\Property\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Larena\\Property\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/PropertyContractTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/PropertyFailsClosedTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/PropertyTypeRegistryTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/PropertyNormalizationValidationTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/PropertyFieldTypesTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/PropertyDisplayProjectorTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/PropertyPresentationRegistryTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/MinimalCmsPropertyStorageContractTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/InMemoryPropertyRuntimeTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Unit/InMemoryPropertyRuntimeFailsClosedTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Feature/PropertyCommandProviderMigrationTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Feature/PropertyServiceProviderRegistrationTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Feature/PropertyTypeRegistryProviderTest.php",
+                    "php -d zend.assertions=1 -d assert.exception=1 tests/Feature/PropertyRouteRegistrationBoundaryTest.php",
+                    "@php tests/Unit/MinimalCmsDependencyContractTest.php"
+                ],
+                "test:unit": [
+                    "@test"
+                ],
+                "lint": [
+                    "php scripts/lint.php"
+                ],
+                "analyse": [
+                    "php scripts/analyse.php"
+                ],
+                "validate:larena": [
+                    "php scripts/validate-larena-package.php"
+                ],
+                "evidence:check": [
+                    "php scripts/check-evidence.php"
+                ],
+                "scope:check": [
+                    "php tools/larena-scope-check.php"
+                ],
+                "quality:gate": [
+                    "@validate:larena",
+                    "@lint",
+                    "@analyse",
+                    "@test",
+                    "@larena:metadata:check",
+                    "@evidence:check",
+                    "@scope:check"
+                ],
+                "larena:metadata:check": [
+                    "php scripts/check-metadata-sync.php"
+                ]
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Rim Zabarov",
+                    "homepage": "https://github.com/zabarov"
+                }
+            ],
+            "description": "Larena Property: Universal property layer for field type registry, field definitions, structured render models, validation, templates and typed value interaction across settings, admin, storage and future content models.",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "larena/ui",
             "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "../ui",
-                "reference": "5580e4a9c3a8e6654db476b235deb34d4298b285"
+                "reference": "f38b79e4379770ac4ef4d72159c98e45b6a8b5bc"
             },
             "require": {
+                "illuminate/console": "^13.0",
+                "larena/core": "dev-main",
                 "larena/dataview": "dev-main",
                 "php": "^8.3"
             },
             "require-dev": {
+                "larena/layout": "dev-main",
                 "phpstan/phpstan": "^2.0"
             },
             "type": "library",
@@ -6414,16 +6708,50 @@
                 }
             },
             "scripts": {
+                "contracts:materialize": [
+                    "@php scripts/materialize-smart-contracts.php"
+                ],
+                "contracts:materialize:b0": [
+                    "@php scripts/materialize-smart-contracts.php"
+                ],
+                "contracts:verify": [
+                    "@php scripts/verify-smart-contracts-with-studio.php"
+                ],
                 "test": [
                     "@php -d zend.assertions=1 -d assert.exception=1 scripts/run-unit-tests.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/AdminRecordEditorSmartViewTest.php",
                     "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/AdminDataviewRendererTest.php",
-                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/AdminUiLabRendererTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/AdminUiLabReferenceBehaviorTest.php",
                     "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SourceBackedComponentRegistryTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/FrameworkContractRegistryTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/FrontendRuntimeLockTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SourceBackedAssetProvenanceLockTest.php",
                     "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SmartTest.php",
-                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/FrontendRuntimeAssetResolverTest.php"
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SmartManagerTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SmartFacadeTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SmartComponentReferenceTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SmartCatalogProjectionTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SmartAiCatalogProjectionTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SmartComponentLibraryTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SfActionLinkTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/FrontendRuntimeAssetResolverTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/RegisteredListRendererTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/RegisteredDocumentRendererTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/RegisteredListDocumentNodeRendererTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/FrameworkLayoutDocumentTypesTest.php"
                 ],
                 "test:unit": [
                     "@php -d zend.assertions=1 -d assert.exception=1 scripts/run-unit-tests.php"
+                ],
+                "test:dataview-host": [
+                    "node --test tests/JavaScript/dataview-host-lifecycle.test.mjs"
+                ],
+                "test:dependency": [
+                    "@php tests/Unit/MinimalCmsDependencyContractTest.php"
+                ],
+                "test:minimal-cms-ui": [
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/InMemoryUiRuntimeTest.php",
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/SmartManagerTest.php"
                 ],
                 "lint": [
                     "@php scripts/lint.php"
@@ -6445,8 +6773,30 @@
                     "@lint",
                     "@analyse",
                     "@test",
+                    "@test:dataview-host",
+                    "@test:composition-routing-host",
+                    "@test:minimal-cms-port-bridge",
+                    "@test:minimal-cms-composite-port",
+                    "@test:composition-schema",
+                    "@test:composition-list",
+                    "@test:dependency",
                     "@evidence:check",
                     "@scope:check"
+                ],
+                "test:composition-list": [
+                    "node --test tests/JavaScript/registered-list-composition.test.mjs"
+                ],
+                "test:composition-routing-host": [
+                    "node --test tests/JavaScript/composition-routing-host.test.mjs"
+                ],
+                "test:minimal-cms-port-bridge": [
+                    "node --test tests/JavaScript/minimal-cms-port-bridge.test.mjs"
+                ],
+                "test:minimal-cms-composite-port": [
+                    "node --test tests/JavaScript/minimal-cms-composite-port.test.mjs"
+                ],
+                "test:composition-schema": [
+                    "@php -d zend.assertions=1 -d assert.exception=1 tests/Unit/FrameworkDocumentSchemaValidatorTest.php"
                 ]
             },
             "license": [
@@ -8957,7 +9307,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "larena/ui": 20
+        "larena/ui": 20,
+        "larena/core": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

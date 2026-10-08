@@ -34,6 +34,14 @@ final class DatabaseAuditEventPipelineBindingTest extends TestCase
         );
     }
 
+    public function testCoreInstallsGetTheInstallAuditTrailFromAudit(): void
+    {
+        self::assertInstanceOf(
+            \Larena\Audit\Install\CoreInstallAuditTrailAdapter::class,
+            $this->app->make(\Larena\Core\Contracts\InstallAuditTrailAdapter::class),
+        );
+    }
+
     public function testExistingGenericBindingsRemainDatabaseBackedAndUnchanged(): void
     {
         /** @var DatabaseManager $database */

@@ -42,4 +42,9 @@ assert_install_audit_true($event['subject'] === 'install_audit_trail_apply', 'In
 assert_install_audit_true($event['retention_class'] === 'operational', 'Install audit event retention class must be operational.');
 assert_install_audit_true($event['payload']['details']['example'] === true, 'Install audit event details must be carried.');
 
+// Core installs read the trail through Core's contract; the adapter answers what InstallAuditTrail answers.
+$adapter = new \Larena\Audit\Install\CoreInstallAuditTrailAdapter();
+assert_install_audit_true(in_array(\Larena\Core\Contracts\InstallAuditTrailAdapter::class, class_implements($adapter), true), 'The adapter must implement Core\'s InstallAuditTrailAdapter.');
+assert_install_audit_true($adapter->plannedTables() === $tables && $adapter->migrationPath() === InstallAuditTrail::migrationPath(), 'The adapter must answer the install trail.');
+
 echo 'InstallAuditTrailTest passed.' . PHP_EOL;
