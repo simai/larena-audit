@@ -21,7 +21,6 @@ abstract class TestCase extends OrchestraTestCase
 
         $this->databasePath = $path;
         parent::setUp();
-        $this->app['view']->addNamespace('larena-admin', __DIR__ . '/Fixtures/views');
         $this->artisan('migrate', ['--database' => 'audit_testing', '--force' => true])
             ->assertSuccessful();
     }
@@ -49,6 +48,8 @@ abstract class TestCase extends OrchestraTestCase
         ]);
         $app['config']->set('larena-audit.admin.enabled', true);
         $app['config']->set('larena-audit.admin.middleware', []);
+        // The admin shell's layout, as a fixture: the history screen is a page of the shell.
+        $app->afterResolving('view', static fn ($view) => $view->addNamespace('larena-admin', __DIR__ . '/Fixtures/views'));
     }
 
     /** @param Application $app

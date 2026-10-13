@@ -5,24 +5,25 @@ declare(strict_types=1);
 namespace Larena\Audit\Admin;
 
 use Illuminate\Contracts\Translation\Translator;
-use Larena\Ui\Smart;
 
 final readonly class AuditHistoryPresenter
 {
     public function __construct(private Translator $translator) {}
 
     /**
-     * The empty state, or null when there are events to list.
+     * The empty state as a neutral node, or null when there are events to list; the admin shell renders it
+     * (larena-admin::components.nodes).
      *
      * @param list<array<string, mixed>> $events
+     * @return array{component: string, props: array<string, string>}|null
      */
-    public function empty(array $events): ?string
+    public function empty(array $events): ?array
     {
-        return $events === [] ? Smart::render('sf-alert', [
+        return $events === [] ? ['component' => 'sf-alert', 'props' => [
             'type' => 'info',
             'title' => $this->text('empty_title'),
             'supporting-text' => $this->text('empty_description'),
-        ])->html : null;
+        ]] : null;
     }
 
     /**

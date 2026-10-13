@@ -8,7 +8,7 @@
 @section('content')
     <section class="larena-panel" aria-label="{{ __('larena-audit::admin.region_label') }}" data-larena-audit-history="persistent">
         @if ($events === [])
-            <div data-larena-audit-empty>{!! $emptyUi !!}</div>
+            <div data-larena-audit-empty>@include('larena-admin::components.nodes', ['nodes' => [$emptyUi]])</div>
         @else
             @include('larena-admin::dataview.list', ['list' => $historyList])
         @endif

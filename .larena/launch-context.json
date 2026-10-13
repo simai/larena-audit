@@ -27,7 +27,9 @@
     "tests/Fixtures/views/dataview/list.blade.php",
     "src/Install/CoreInstallAuditTrailAdapter.php",
     "tests/Unit/InstallAuditTrailTest.php",
-    "tests/Feature/DatabaseAuditEventPipelineBindingTest.php"
+    "tests/Feature/DatabaseAuditEventPipelineBindingTest.php",
+    "tests/TestCase.php",
+    "tests/Fixtures/views/components/nodes.blade.php"
   ],
   "forbidden_files": [
     "database/*",

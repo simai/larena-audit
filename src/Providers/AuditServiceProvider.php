@@ -8,6 +8,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\ServiceProvider;
+use Larena\Access\Runtime\AccessOperationRegistry;
+use Larena\Access\ValueObjects\AccessOperationDescriptor;
 use Larena\Audit\Contracts\AuditSink;
 use Larena\Audit\Contracts\ConnectionBoundAuditEventPipeline;
 use Larena\Audit\Runtime\AuditEventPipeline;
@@ -58,10 +60,10 @@ final class AuditServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $registryClass = 'Larena\\Access\\Runtime\\AccessOperationRegistry';
-        $descriptorClass = 'Larena\\Access\\ValueObjects\\AccessOperationDescriptor';
-        if (class_exists($registryClass) && class_exists($descriptorClass)) {
-            $this->app->make($registryClass)->register(new $descriptorClass(
+        // The access bridge: with larena/access installed (a suggested package), the history read is an
+        // access operation; the classes are named, not spelled as strings, so a rename breaks loudly.
+        if (class_exists(AccessOperationRegistry::class) && class_exists(AccessOperationDescriptor::class)) {
+            $this->app->make(AccessOperationRegistry::class)->register(new AccessOperationDescriptor(
                 'audit.history.read', 'larena/audit', 'larena-audit::operations.history_read', 'audit.history:all', 'read', 'high',
             ));
         }
@@ -72,13 +74,18 @@ final class AuditServiceProvider extends ServiceProvider
 
         /** @var ConfigRepository $config */
         $config = $this->app->make(ConfigRepository::class);
-        // The history screen is the only thing in audit that renders anything, and
-        // it renders with larena/ui. Without UI — a headless composition — audit
-        // still records, reads and pipelines events; it just has no screen.
+        // The history screen is the only thing in audit that renders anything: a page of the admin shell
+        // (its layout larena-admin::layouts.app) built with larena/ui. Without both — a headless composition —
+        // audit still records, reads and pipelines events; it just has no screen. The shell's views are known
+        // once every provider has booted, so the route is decided then.
         if ($this->app->environment((array) $config->get('larena-audit.admin.allowed_environments', ['local', 'testing']))
             && (bool) $config->get('larena-audit.admin.enabled', false)
             && class_exists(\Larena\Ui\Smart::class)) {
-            $this->loadRoutesFrom(__DIR__ . '/../../routes/admin.php');
+            $this->app->booted(function (): void {
+                if ($this->app->make('view')->exists('larena-admin::layouts.app')) {
+                    $this->loadRoutesFrom(__DIR__ . '/../../routes/admin.php');
+                }
+            });
         }
     }
 }

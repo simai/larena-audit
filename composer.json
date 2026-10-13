@@ -17,6 +17,8 @@
     "php": "^8.3"
   },
     "suggest": {
+        "larena/access": "Makes the history read an access operation (audit.history.read).",
+        "larena/admin": "Hosts the history screen in its shell; with larena/ui, the screen appears.",
         "larena/ui": "Renders the administrator audit history screen. Audit records, reads and pipelines events without it."
     },
   "repositories": [

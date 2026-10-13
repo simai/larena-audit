@@ -18,7 +18,11 @@
     "docs/project-management/evidence/minimal-cms-v1-1-batch-7-admin-headless/*",
     "docs/project-management/launch-records/minimal-cms-v1-1-batch-7-wave-c-audit-ui-optional.json",
     "module.yaml",
-    "src/Providers/AuditServiceProvider.php"
+    "src/Providers/AuditServiceProvider.php",
+    "tests/TestCase.php",
+    "src/Admin/AuditHistoryPresenter.php",
+    "resources/views/admin/index.blade.php",
+    "tests/Fixtures/views/components/nodes.blade.php"
   ],
   "forbidden_behavior": [
     "changing how audit records, reads, redacts or pipelines events",
