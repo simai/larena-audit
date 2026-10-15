@@ -85,5 +85,8 @@
   "coding_branch": "feature/minimal-cms-v1-1-batch-7-audit-ui-optional",
   "next_transition": "root_integrated_review_and_acceptance",
   "remote_push_status": "pending_current_commit",
-  "status": "coding_started"
+  "status": "coding_started",
+  "current_batch_allowed_files": [
+    "src/Admin/AuditHistoryPresenter.php"
+  ]
 }

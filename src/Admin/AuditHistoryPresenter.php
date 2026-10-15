@@ -45,7 +45,8 @@ final readonly class AuditHistoryPresenter
                 ['key' => 'subject', 'label' => $this->text('columns.subject')],
                 ['key' => 'actor', 'label' => $this->text('columns.actor')],
                 ['key' => 'detail', 'label' => $this->text('columns.detail')],
-                ['key' => 'time', 'label' => $this->text('columns.time')],
+                // Kept in UTC; the admin shows it in the site's time zone.
+                ['key' => 'time', 'label' => $this->text('columns.time'), 'type' => 'moment'],
             ],
             'rows' => array_map(fn (array $event): array => [
                 'id' => 'event-' . (string) ($event['id'] ?? ''),
