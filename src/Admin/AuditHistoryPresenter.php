@@ -40,8 +40,10 @@ final readonly class AuditHistoryPresenter
             'title' => $this->text('region_label'),
             'page_id' => 'page.admin.audit-history',
             'owner' => 'larena/audit',
+            // An event opens as its record, over the admin's history port, from its operation.
+            'record' => ['collection' => 'audit.events', 'port' => '/admin/audit/record-port', 'scope' => 'scope:audit'],
             'columns' => [
-                ['key' => 'operation', 'label' => $this->text('columns.operation')],
+                ['key' => 'operation', 'label' => $this->text('columns.operation'), 'role' => 'title'],
                 ['key' => 'subject', 'label' => $this->text('columns.subject')],
                 ['key' => 'actor', 'label' => $this->text('columns.actor')],
                 ['key' => 'detail', 'label' => $this->text('columns.detail')],
