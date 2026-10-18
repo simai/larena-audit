@@ -22,7 +22,9 @@
     "tests/TestCase.php",
     "src/Admin/AuditHistoryPresenter.php",
     "resources/views/admin/index.blade.php",
-    "tests/Fixtures/views/components/nodes.blade.php"
+    "tests/Fixtures/views/components/nodes.blade.php",
+    "src/Install/InstallAuditTrail.php",
+    "tests/Unit/InstallAuditTrailTest.php"
   ],
   "forbidden_behavior": [
     "changing how audit records, reads, redacts or pipelines events",

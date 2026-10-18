@@ -29,7 +29,8 @@
     "tests/Unit/InstallAuditTrailTest.php",
     "tests/Feature/DatabaseAuditEventPipelineBindingTest.php",
     "tests/TestCase.php",
-    "tests/Fixtures/views/components/nodes.blade.php"
+    "tests/Fixtures/views/components/nodes.blade.php",
+    "src/Install/InstallAuditTrail.php"
   ],
   "forbidden_files": [
     "database/*",
@@ -87,6 +88,8 @@
   "remote_push_status": "pending_current_commit",
   "status": "coding_started",
   "current_batch_allowed_files": [
-    "src/Admin/AuditHistoryPresenter.php"
+    "src/Admin/AuditHistoryPresenter.php",
+    "src/Install/InstallAuditTrail.php",
+    "tests/Unit/InstallAuditTrailTest.php"
   ]
 }

@@ -33,7 +33,7 @@ $event = InstallAuditTrail::eventPayload([
     ],
 ], 'install_audit_trail_apply', 'passed', ['example' => true]);
 
-assert_install_audit_true($event['schema'] === 'larena.install_audit_event.v1', 'Install audit event schema must be stable.');
+assert_install_audit_true($event['schema'] === 'larena.install_audit_event' && $event['schema_version'] === 1, 'Install audit event schema must be stable.');
 assert_install_audit_true($event['source_package'] === 'larena/core', 'Core must be the installer event source package.');
 assert_install_audit_true($event['category'] === 'installer', 'Install event category must be installer.');
 assert_install_audit_true($event['event_type'] === 'installer.install_audit_trail_apply', 'Install event type must include operation.');

@@ -48,7 +48,8 @@ final class InstallAuditTrail
         $correlationId = 'install:' . $launchRecordId . ':' . $operation;
 
         return [
-            'schema' => 'larena.install_audit_event.v1',
+            'schema' => 'larena.install_audit_event',
+            'schema_version' => 1,
             'event_key' => hash('sha256', $correlationId),
             'source_package' => 'larena/core',
             'category' => 'installer',
