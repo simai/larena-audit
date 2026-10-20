@@ -30,7 +30,10 @@
     "tests/Feature/DatabaseAuditEventPipelineBindingTest.php",
     "tests/TestCase.php",
     "tests/Fixtures/views/components/nodes.blade.php",
-    "src/Install/InstallAuditTrail.php"
+    "src/Install/InstallAuditTrail.php",
+    "src/ReadModel/AuditHistoryReader.php",
+    "resources/lang/en/admin.php",
+    "resources/lang/ru/admin.php"
   ],
   "forbidden_files": [
     "database/*",
@@ -90,6 +93,9 @@
   "current_batch_allowed_files": [
     "src/Admin/AuditHistoryPresenter.php",
     "src/Install/InstallAuditTrail.php",
-    "tests/Unit/InstallAuditTrailTest.php"
+    "tests/Unit/InstallAuditTrailTest.php",
+    "src/ReadModel/AuditHistoryReader.php",
+    "resources/lang/en/admin.php",
+    "resources/lang/ru/admin.php"
   ]
 }

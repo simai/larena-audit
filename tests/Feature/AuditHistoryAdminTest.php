@@ -98,6 +98,63 @@ final class AuditHistoryAdminTest extends TestCase
             ->assertDontSee('must-not-render');
     }
 
+    public function testStorageEventsAppearThroughSafeProjection(): void
+    {
+        $this->insertEvent(1, 'storage.record.created', [
+            'version' => 1, 'operation' => 'create',
+            'values' => ['title' => 'RECORD VALUE MUST STAY PRIVATE'],
+            'field_key' => 'secret-field-key',
+        ], 'larena/storage', 'storage_record');
+        $this->insertEvent(2, 'storage.workbench.structure.archived', [
+            'operation' => 'archive', 'definition' => 'STRUCTURE DEFINITION MUST STAY PRIVATE',
+        ], 'larena/storage', 'storage_structure');
+        $this->insertEvent(3, 'storage.schema.version_rejected', [
+            'reason' => 'incompatible', 'target_definition' => 'TARGET DEFINITION MUST STAY PRIVATE',
+        ], 'larena/storage', 'storage_schema');
+        $this->insertEvent(4, 'storage.locale.written', ['value' => 'LOCALIZED VALUE MUST STAY PRIVATE'], 'larena/storage', 'storage_locale');
+
+        $this->get('/admin/audit')->assertOk()
+            ->assertSeeInOrder(['Storage activity', 'Schema version rejected', 'Structure archived', 'Record created'])
+            ->assertSee('storage.record.created')
+            ->assertSee('incompatible')
+            ->assertDontSee('larena-audit::admin.operations')
+            ->assertDontSee('MUST STAY PRIVATE')
+            ->assertDontSee('secret-field-key');
+    }
+
+    public function testStorageEventsHaveRussianLabels(): void
+    {
+        $this->insertEvent(1, 'storage.record.deleted', ['operation' => 'archive'], 'larena/storage', 'storage_record');
+        $this->insertEvent(2, 'storage.record.purged', ['operation' => 'purge'], 'larena/storage', 'storage_record');
+        $this->app->setLocale('ru');
+
+        $this->get('/admin/audit')->assertOk()
+            ->assertSee('Запись удалена навсегда')
+            ->assertSee('Запись перемещена в архив')
+            ->assertDontSee('larena-audit::admin.operations');
+    }
+
+    public function testEveryReaderLabelHasEnglishAndRussianTranslations(): void
+    {
+        $source = (string) file_get_contents(__DIR__ . '/../../src/ReadModel/AuditHistoryReader.php');
+        preg_match('/function operationLabel.*$/s', $source, $method);
+        preg_match_all("/=> '([^']+)'/", $method[0] ?? '', $matches);
+        $labels = array_values(array_unique($matches[1]));
+
+        /** @var array{operations: array<string, string>} $en */
+        $en = require __DIR__ . '/../../resources/lang/en/admin.php';
+        /** @var array{operations: array<string, string>} $ru */
+        $ru = require __DIR__ . '/../../resources/lang/ru/admin.php';
+
+        self::assertContains('Storage activity', $labels);
+        self::assertContains('Record purged', $labels);
+        foreach ($labels as $label) {
+            self::assertArrayHasKey($label, $en['operations'], $label);
+            self::assertArrayHasKey($label, $ru['operations'], $label);
+        }
+        self::assertSame(array_keys($en['operations']), array_keys($ru['operations']));
+    }
+
     public function testHistorySurfaceHasRussianTranslationParity(): void
     {
         $this->insertEvent(1, 'docara_page_submitted_for_review', [

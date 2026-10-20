@@ -52,7 +52,8 @@ final readonly class AuditHistoryReader
                     'docara_page_restored', 'docara_page_update_denied',
                     'file_uploaded', 'file_metadata_updated', 'file_deleted', 'file_used',
                 ])->orWhere('event_type', 'like', 'auth.%')
-                    ->orWhere('event_type', 'like', 'access.%');
+                    ->orWhere('event_type', 'like', 'access.%')
+                    ->orWhere('event_type', 'like', 'storage.%');
             })
             ->orderByDesc('id')
             ->limit(max(1, min($this->limit, 500)))
@@ -137,9 +138,29 @@ final readonly class AuditHistoryReader
             'file_metadata_updated' => 'File metadata updated',
             'file_deleted' => 'File deleted',
             'file_used' => 'File used on page',
-            default => str_starts_with($eventType, 'auth.') || str_starts_with($eventType, 'access.')
-                ? 'Security activity'
-                : 'Page activity',
+            'storage.record.created' => 'Record created',
+            'storage.record.updated' => 'Record updated',
+            'storage.record.deleted' => 'Record archived',
+            'storage.record.restored' => 'Record restored',
+            'storage.record.purged' => 'Record purged',
+            'storage.record.history_pruned' => 'Record history pruned',
+            'storage.workbench.structure.archived' => 'Structure archived',
+            'storage.workbench.structure.restored' => 'Structure restored',
+            'storage.workbench.structure.purged' => 'Structure purged',
+            'storage.workbench.structure.history_keep_changed' => 'Structure history limit changed',
+            'storage.schema.created' => 'Schema created',
+            'storage.schema.versioned' => 'Schema version created',
+            'storage.schema.version_rejected' => 'Schema version rejected',
+            'storage.publication.published' => 'Record published',
+            'storage.publication.unpublished' => 'Record unpublished',
+            'storage.publication.scheduled' => 'Publication scheduled',
+            'storage.publication.archived' => 'Publication archived',
+            'storage.publication.swept' => 'Scheduled publications applied',
+            default => match (true) {
+                str_starts_with($eventType, 'auth.'), str_starts_with($eventType, 'access.') => 'Security activity',
+                str_starts_with($eventType, 'storage.') => 'Storage activity',
+                default => 'Page activity',
+            },
         };
     }
 }
