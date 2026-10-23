@@ -33,7 +33,12 @@
     "src/Install/InstallAuditTrail.php",
     "src/ReadModel/AuditHistoryReader.php",
     "resources/lang/en/admin.php",
-    "resources/lang/ru/admin.php"
+    "resources/lang/ru/admin.php",
+    "LICENSE",
+    "NOTICE",
+    "AUTHORS",
+    "CITATION.cff",
+    "REUSE.toml"
   ],
   "forbidden_files": [
     "database/*",
