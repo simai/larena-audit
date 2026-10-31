@@ -54,8 +54,29 @@ final class AuditServiceProvider extends ServiceProvider
             return new AuditHistoryReader(
                 $database->connection(),
                 (int) $app->make(ConfigRepository::class)->get('larena-audit.admin.limit', 100),
+                self::historySources($app->make(ConfigRepository::class)->get('larena-audit.history_sources', [])),
             );
         });
+    }
+
+    /**
+     * The declared event families, each a prefix that ends with a dot and a label: anything else is left out, so a
+     * mistyped declaration can never widen the history to every event.
+     *
+     * @return list<array{prefix: string, label: string}>
+     */
+    private static function historySources(mixed $declared): array
+    {
+        $sources = [];
+        foreach (is_array($declared) ? $declared : [] as $source) {
+            $prefix = is_array($source) ? ($source['prefix'] ?? null) : null;
+            $label = is_array($source) ? ($source['label'] ?? null) : null;
+            if (is_string($prefix) && preg_match('/^[a-z][a-z0-9_]*(\.[a-z0-9_]+)*\.$/', $prefix) === 1 && is_string($label) && $label !== '') {
+                $sources[] = ['prefix' => $prefix, 'label' => $label];
+            }
+        }
+
+        return $sources;
     }
 
     public function boot(): void

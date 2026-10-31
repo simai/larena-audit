@@ -10,9 +10,15 @@ use stdClass;
 
 final readonly class AuditHistoryReader
 {
+    /**
+     * @param list<array{prefix: string, label: string}> $sources the event families other packages declare for the
+     *        history (config `larena-audit.history_sources`): every event whose type starts with `prefix`, named by
+     *        `label`, a translation key of the declaring package
+     */
     public function __construct(
         private ConnectionInterface $connection,
         private int $limit = 100,
+        private array $sources = [],
     ) {
     }
 
@@ -45,7 +51,7 @@ final readonly class AuditHistoryReader
     public function events(): array
     {
         return $this->connection->table('larena_audit_events')
-            ->where(static function ($query): void {
+            ->where(function ($query): void {
                 $query->whereIn('event_type', [
                     'docara_page_created', 'docara_page_updated', 'docara_page_published',
                     'docara_page_unpublished', 'docara_page_submitted_for_review',
@@ -54,6 +60,10 @@ final readonly class AuditHistoryReader
                 ])->orWhere('event_type', 'like', 'auth.%')
                     ->orWhere('event_type', 'like', 'access.%')
                     ->orWhere('event_type', 'like', 'storage.%');
+                foreach ($this->sources as $source) {
+                    // An exact prefix: a LIKE pattern would read `_` as any character.
+                    $query->orWhereRaw('substr(event_type, 1, ?) = ?', [strlen($source['prefix']), $source['prefix']]);
+                }
             })
             ->orderByDesc('id')
             ->limit(max(1, min($this->limit, 500)))
@@ -68,7 +78,7 @@ final readonly class AuditHistoryReader
     {
         $payload = $this->safePayload((string) $event->payload);
         $detail = [];
-        foreach (['slug', 'status', 'version', 'role', 'operation', 'reason', 'logical_ref', 'display_name', 'mime_type', 'size_bytes', 'visibility', 'purpose'] as $key) {
+        foreach (['slug', 'status', 'version', 'role', 'operation', 'reason', 'logical_ref', 'display_name', 'mime_type', 'size_bytes', 'visibility', 'purpose', 'owner'] as $key) {
             $value = $this->allowedString($payload, $key);
             if ($value !== null) { $detail[$key] = $value; }
         }
@@ -126,6 +136,12 @@ final readonly class AuditHistoryReader
 
     private function operationLabel(string $eventType): string
     {
+        foreach ($this->sources as $source) {
+            if (str_starts_with($eventType, $source['prefix'])) {
+                return $source['label'];
+            }
+        }
+
         return match ($eventType) {
             'docara_page_created' => 'Created',
             'docara_page_updated' => 'Updated',

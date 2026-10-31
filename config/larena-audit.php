@@ -20,4 +20,7 @@ return [
         ],
         'limit' => 100,
     ],
+    // Event families other packages show in the history: each declares {prefix: 'env.', label: '<package>::<key>'}
+    // by pushing onto this list in its provider's boot, so the audit package needs to know none of them.
+    'history_sources' => [],
 ];

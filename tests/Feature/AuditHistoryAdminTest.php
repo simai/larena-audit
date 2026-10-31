@@ -122,6 +122,26 @@ final class AuditHistoryAdminTest extends TestCase
             ->assertDontSee('secret-field-key');
     }
 
+    public function testDeclaredEventFamiliesAppearWithTheirOwnLabel(): void
+    {
+        // A package declares its family in its own provider; the audit package names none of them.
+        config()->push('larena-audit.history_sources', ['prefix' => 'env.', 'label' => 'larena-audit::admin.title']);
+        config()->push('larena-audit.history_sources', ['prefix' => 'every', 'label' => 'Wider than a family']);
+        app('translator')->addLines(['admin.title' => 'Server activity'], 'en', 'larena-audit');
+        $this->insertEvent(1, 'env.person.owner_assigned', ['owner' => 'demo', 'token' => 'must-not-render'], 'larena/env', 'panel');
+        $this->insertEvent(2, 'envelope.sealed', ['owner' => 'not-a-family'], 'larena/other', 'other');
+
+        $this->get('/admin/audit')->assertOk()
+            ->assertSee('Server activity')
+            ->assertSee('env.person.owner_assigned')
+            ->assertSee('demo')
+            ->assertDontSee('must-not-render')
+            // `env.` is a family of its own: an event that only starts with the same letters stays out, and a
+            // declaration without a closing dot is ignored.
+            ->assertDontSee('envelope.sealed')
+            ->assertDontSee('Wider than a family');
+    }
+
     public function testStorageEventsHaveRussianLabels(): void
     {
         $this->insertEvent(1, 'storage.record.deleted', ['operation' => 'archive'], 'larena/storage', 'storage_record');

@@ -38,7 +38,8 @@
     "NOTICE",
     "AUTHORS",
     "CITATION.cff",
-    "REUSE.toml"
+    "REUSE.toml",
+    "config/larena-audit.php"
   ],
   "forbidden_files": [
     "database/*",

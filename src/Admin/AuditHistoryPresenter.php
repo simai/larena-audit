@@ -52,13 +52,19 @@ final readonly class AuditHistoryPresenter
             ],
             'rows' => array_map(fn (array $event): array => [
                 'id' => 'event-' . (string) ($event['id'] ?? ''),
-                'operation' => $this->text('operations.' . (string) $event['operation']) . ' · ' . (string) $event['operation_code'],
+                'operation' => $this->operation((string) $event['operation']) . ' · ' . (string) $event['operation_code'],
                 'subject' => (string) $event['subject'],
                 'actor' => (string) $event['actor'],
                 'detail' => $this->detail(is_array($event['detail'] ?? null) ? $event['detail'] : []),
                 'time' => (string) $event['occurred_at'],
             ], $events),
         ];
+    }
+
+    /** A declared family's label is its package's own translation key; the rest are the history's own words. */
+    private function operation(string $label): string
+    {
+        return str_contains($label, '::') ? (string) $this->translator->get($label) : $this->text('operations.' . $label);
     }
 
     /** @param array<string, mixed> $detail */
