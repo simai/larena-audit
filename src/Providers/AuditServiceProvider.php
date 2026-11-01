@@ -10,6 +10,8 @@ use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\ServiceProvider;
 use Larena\Access\Runtime\AccessOperationRegistry;
 use Larena\Access\ValueObjects\AccessOperationDescriptor;
+use Larena\Audit\Admin\AuditHistoryPresenter;
+use Larena\Audit\Contracts\AuditReferenceNames;
 use Larena\Audit\Contracts\AuditSink;
 use Larena\Audit\Contracts\ConnectionBoundAuditEventPipeline;
 use Larena\Audit\Runtime\AuditEventPipeline;
@@ -56,6 +58,18 @@ final class AuditServiceProvider extends ServiceProvider
                 (int) $app->make(ConfigRepository::class)->get('larena-audit.admin.limit', 100),
                 self::historySources($app->make(ConfigRepository::class)->get('larena-audit.history_sources', [])),
             );
+        });
+        $this->app->bind(AuditHistoryPresenter::class, static function (Application $app): AuditHistoryPresenter {
+            $names = [];
+            $declared = $app->make(ConfigRepository::class)->get('larena-audit.reference_names', []);
+            foreach (is_array($declared) ? array_unique(array_filter($declared, 'is_string')) : [] as $class) {
+                // Only a class that implements the contract: a stale declaration of a removed package is skipped.
+                if (is_a($class, AuditReferenceNames::class, true)) {
+                    $names[] = $app->make($class);
+                }
+            }
+
+            return new AuditHistoryPresenter($app->make('translator'), $names);
         });
     }
 

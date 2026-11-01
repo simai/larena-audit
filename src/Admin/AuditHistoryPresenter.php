@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Larena\Audit\Admin;
 
 use Illuminate\Contracts\Translation\Translator;
+use Larena\Audit\Contracts\AuditReferenceNames;
+use Throwable;
 
 final readonly class AuditHistoryPresenter
 {
-    public function __construct(private Translator $translator) {}
+    /** @param list<AuditReferenceNames> $names what the declaring packages call the actors and subjects they own */
+    public function __construct(private Translator $translator, private array $names = []) {}
 
     /**
      * The empty state as a neutral node, or null when there are events to list; the admin shell renders it
@@ -35,6 +38,8 @@ final readonly class AuditHistoryPresenter
      */
     public function list(array $events): array
     {
+        $names = $this->names($events);
+
         return [
             'id' => 'audit-history',
             'title' => $this->text('region_label'),
@@ -53,12 +58,49 @@ final readonly class AuditHistoryPresenter
             'rows' => array_map(fn (array $event): array => [
                 'id' => 'event-' . (string) ($event['id'] ?? ''),
                 'operation' => $this->operation((string) $event['operation']) . ' · ' . (string) $event['operation_code'],
-                'subject' => (string) $event['subject'],
-                'actor' => (string) $event['actor'],
+                'subject' => $names[(string) $event['subject']] ?? (string) $event['subject'],
+                'actor' => $names[(string) $event['actor']] ?? (string) $event['actor'],
                 'detail' => $this->detail(is_array($event['detail'] ?? null) ? $event['detail'] : []),
                 'time' => (string) $event['occurred_at'],
             ], $events),
         ];
+    }
+
+    /**
+     * The people and things on the page by name; a namer that fails or answers for a reference it was not asked
+     * about is ignored, so the history still lists every event.
+     *
+     * @param list<array<string, mixed>> $events
+     * @return array<string, string>
+     */
+    private function names(array $events): array
+    {
+        $refs = [];
+        foreach ($events as $event) {
+            foreach (['actor', 'subject'] as $key) {
+                $ref = (string) ($event[$key] ?? '');
+                if ($ref !== '') {
+                    $refs[$ref] = true;
+                }
+            }
+        }
+        $refs = array_keys($refs);
+        $names = [];
+        foreach ($refs === [] ? [] : $this->names as $namer) {
+            try {
+                $answer = $namer->names(array_map('strval', $refs));
+            } catch (Throwable) {
+                continue;
+            }
+            foreach ($answer as $ref => $name) {
+                $name = trim($name);
+                if (!isset($names[$ref]) && in_array($ref, $refs, true) && $name !== '') {
+                    $names[$ref] = $name;
+                }
+            }
+        }
+
+        return $names;
     }
 
     /** A declared family's label is its package's own translation key; the rest are the history's own words. */

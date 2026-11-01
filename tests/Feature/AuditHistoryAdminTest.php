@@ -122,6 +122,22 @@ final class AuditHistoryAdminTest extends TestCase
             ->assertDontSee('secret-field-key');
     }
 
+    public function testDeclaredNamesReplaceRawReferences(): void
+    {
+        // The package that owns the people names them; a stale or foreign declaration is skipped.
+        config()->push('larena-audit.reference_names', \Larena\Audit\Tests\Fixtures\Names\PeopleNames::class);
+        config()->push('larena-audit.reference_names', 'Larena\\Gone\\RemovedNames');
+        config()->push('larena-audit.reference_names', \stdClass::class);
+        $this->insertEvent(1, 'docara_page_created', ['slug' => 'welcome']);
+
+        $this->get('/admin/audit')->assertOk()
+            ->assertSee('Anna Admin')
+            ->assertDontSee('user:admin_identity:1')
+            ->assertDontSee('Not on the page')
+            // Nobody names pages here: the subject stays its reference.
+            ->assertSee('docara:page:1');
+    }
+
     public function testDeclaredEventFamiliesAppearWithTheirOwnLabel(): void
     {
         // A package declares its family in its own provider; the audit package names none of them.

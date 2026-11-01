@@ -39,7 +39,9 @@
     "AUTHORS",
     "CITATION.cff",
     "REUSE.toml",
-    "config/larena-audit.php"
+    "config/larena-audit.php",
+    "src/Contracts/AuditReferenceNames.php",
+    "tests/Fixtures/Names/PeopleNames.php"
   ],
   "forbidden_files": [
     "database/*",
@@ -102,6 +104,9 @@
     "tests/Unit/InstallAuditTrailTest.php",
     "src/ReadModel/AuditHistoryReader.php",
     "resources/lang/en/admin.php",
-    "resources/lang/ru/admin.php"
+    "resources/lang/ru/admin.php",
+    "src/Contracts/AuditReferenceNames.php",
+    "tests/Fixtures/Names/PeopleNames.php",
+    "config/larena-audit.php"
   ]
 }

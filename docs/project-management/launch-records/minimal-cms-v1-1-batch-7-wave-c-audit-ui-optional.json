@@ -24,7 +24,10 @@
     "resources/views/admin/index.blade.php",
     "tests/Fixtures/views/components/nodes.blade.php",
     "src/Install/InstallAuditTrail.php",
-    "tests/Unit/InstallAuditTrailTest.php"
+    "tests/Unit/InstallAuditTrailTest.php",
+    "src/Contracts/AuditReferenceNames.php",
+    "tests/Fixtures/Names/PeopleNames.php",
+    "config/larena-audit.php"
   ],
   "forbidden_behavior": [
     "changing how audit records, reads, redacts or pipelines events",
