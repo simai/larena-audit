@@ -23,8 +23,8 @@ final readonly class AuditHistoryPresenter
     public function empty(array $events): ?array
     {
         return $events === [] ? ['component' => 'sf-alert', 'props' => [
-            'type' => 'info',
-            'title' => $this->text('empty_title'),
+            'status' => 'info',
+            'heading' => $this->text('empty_title'),
             'supporting-text' => $this->text('empty_description'),
         ]] : null;
     }
