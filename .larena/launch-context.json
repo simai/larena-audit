@@ -44,7 +44,8 @@
     "tests/Fixtures/Names/PeopleNames.php",
     "tests/Feature/AuditHistoryEntriesTest.php",
     "src/Contracts/AuditOnBehalf.php",
-    "src/Sinks/DatabaseAuditSink.php"
+    "src/Sinks/DatabaseAuditSink.php",
+    "resources/lang/ru/operations.php"
   ],
   "forbidden_files": [
     "database/*",
