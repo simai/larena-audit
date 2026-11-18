@@ -67,6 +67,94 @@ final readonly class AuditHistoryPresenter
     }
 
     /**
+     * The events in words for «История» (larena/admin, PX-50): what was done and over what, who did it — «Вы» for the
+     * reader ($self), a person by name, or the system —, whether it was refused, and the codes apart for «Подробно».
+     * Plain arrays: the admin turns them into its rows, so Audit needs no Admin class.
+     *
+     * @param list<array<string, mixed>> $events
+     * @return list<array{key: string, title: string, at: string, actor: string, actor_key: string, object: string,
+     *     object_key: string, outcome: string, note: string, security: bool, details: list<array{0: string, 1: string}>}>
+     */
+    public function entries(array $events, string $self = ''): array
+    {
+        $names = $this->names($events);
+        $entries = [];
+        foreach ($events as $event) {
+            $type = (string) ($event['operation_code'] ?? '');
+            $actor = (string) ($event['actor'] ?? '');
+            $subject = (string) ($event['subject'] ?? '');
+            $detail = is_array($event['detail'] ?? null) ? $event['detail'] : [];
+            $object = $subject !== $actor ? ($names[$subject] ?? '') : '';
+            $words = $this->words($type, is_string($event['words'] ?? null) ? $event['words'] : null, (string) ($event['operation'] ?? ''));
+            $denied = str_ends_with($type, '.denied') || str_ends_with($type, '_denied') || ($detail['status'] ?? null) === 'denied';
+            $failed = str_ends_with($type, '_failed') || str_ends_with($type, '.failed') || str_ends_with($type, '.rejected') || str_ends_with($type, '_rejected');
+            $details = [[$this->text('history.code'), $type]];
+            if ($subject !== '') {
+                $details[] = [$this->text('history.subject'), $subject];
+            }
+            if ($actor !== '') {
+                $details[] = [$this->text('history.actor'), $actor];
+            }
+            foreach ($detail as $key => $value) {
+                if (is_scalar($value) && (string) $value !== '') {
+                    $details[] = [(string) $key, (string) $value];
+                }
+            }
+            $entries[] = [
+                'key' => (string) ($event['id'] ?? ''),
+                'title' => $object !== '' ? $words.': '.$object : $words,
+                'at' => self::moment((string) ($event['occurred_at'] ?? '')),
+                'actor' => $this->actorWords($actor, $self, $names),
+                'actor_key' => $actor,
+                'object' => $object,
+                'object_key' => $object !== '' ? $subject : '',
+                'outcome' => $denied ? 'denied' : ($failed ? 'failed' : 'done'),
+                'note' => $denied ? $this->text('history.denied') : ($failed ? $this->text('history.failed') : ''),
+                'security' => \Larena\Audit\ReadModel\AuditHistoryReader::isSecurity($type),
+                'details' => $details,
+            ];
+        }
+
+        return $entries;
+    }
+
+    /** The event's sentence: its package's, the history's own, or its family's name. */
+    private function words(string $type, ?string $declared, string $label): string
+    {
+        foreach (array_filter([$declared, 'larena-audit::admin.history.events.'.str_replace('.', '_', $type)]) as $key) {
+            $line = $this->translator->get($key);
+            if (is_string($line) && $line !== $key && $line !== '') {
+                return $line;
+            }
+        }
+
+        return $label !== '' ? $this->operation($label) : $type;
+    }
+
+    /** @param array<string, string> $names */
+    private function actorWords(string $actor, string $self, array $names): string
+    {
+        if ($actor !== '' && $actor === $self) {
+            return $this->text('history.you');
+        }
+        if (isset($names[$actor])) {
+            return $names[$actor];
+        }
+
+        return $this->text(str_starts_with($actor, 'user:') ? 'history.someone' : 'history.system');
+    }
+
+    /** The stored UTC moment (`Y-m-d H:i:s`) as ISO 8601, for the reader's own time; empty when it is not one. */
+    private static function moment(string $stored): string
+    {
+        if (preg_match('/\A\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}\z/D', $stored) === 1) {
+            return str_replace(' ', 'T', $stored).'Z';
+        }
+
+        return preg_match('/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})\z/D', $stored) === 1 ? $stored : '';
+    }
+
+    /**
      * The people and things on the page by name; a namer that fails or answers for a reference it was not asked
      * about is ignored, so the history still lists every event.
      *

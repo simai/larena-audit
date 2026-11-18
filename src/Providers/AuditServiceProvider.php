@@ -77,7 +77,7 @@ final class AuditServiceProvider extends ServiceProvider
      * The declared event families, each a prefix that ends with a dot and a label: anything else is left out, so a
      * mistyped declaration can never widen the history to every event.
      *
-     * @return list<array{prefix: string, label: string}>
+     * @return list<array{prefix: string, label: string, words?: string}>
      */
     private static function historySources(mixed $declared): array
     {
@@ -86,7 +86,9 @@ final class AuditServiceProvider extends ServiceProvider
             $prefix = is_array($source) ? ($source['prefix'] ?? null) : null;
             $label = is_array($source) ? ($source['label'] ?? null) : null;
             if (is_string($prefix) && preg_match('/^[a-z][a-z0-9_]*(\.[a-z0-9_]+)*\.$/', $prefix) === 1 && is_string($label) && $label !== '') {
-                $sources[] = ['prefix' => $prefix, 'label' => $label];
+                $words = $source['words'] ?? null;
+                $sources[] = ['prefix' => $prefix, 'label' => $label]
+                    + (is_string($words) && preg_match('/\A[a-z][a-z0-9-]*::[a-z][a-z0-9_.]*\z/D', $words) === 1 ? ['words' => $words] : []);
             }
         }
 

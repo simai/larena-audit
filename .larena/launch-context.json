@@ -41,7 +41,8 @@
     "REUSE.toml",
     "config/larena-audit.php",
     "src/Contracts/AuditReferenceNames.php",
-    "tests/Fixtures/Names/PeopleNames.php"
+    "tests/Fixtures/Names/PeopleNames.php",
+    "tests/Feature/AuditHistoryEntriesTest.php"
   ],
   "forbidden_files": [
     "database/*",
@@ -107,6 +108,10 @@
     "resources/lang/ru/admin.php",
     "src/Contracts/AuditReferenceNames.php",
     "tests/Fixtures/Names/PeopleNames.php",
-    "config/larena-audit.php"
+    "config/larena-audit.php",
+    "composer.json",
+    "src/Http/Controllers/AuditHistoryAdminController.php",
+    "src/Providers/AuditServiceProvider.php",
+    "tests/Feature/AuditHistoryEntriesTest.php"
   ]
 }

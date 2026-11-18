@@ -27,7 +27,12 @@
     "tests/Unit/InstallAuditTrailTest.php",
     "src/Contracts/AuditReferenceNames.php",
     "tests/Fixtures/Names/PeopleNames.php",
-    "config/larena-audit.php"
+    "config/larena-audit.php",
+    "resources/lang/en/admin.php",
+    "resources/lang/ru/admin.php",
+    "src/Http/Controllers/AuditHistoryAdminController.php",
+    "src/ReadModel/AuditHistoryReader.php",
+    "tests/Feature/AuditHistoryEntriesTest.php"
   ],
   "forbidden_behavior": [
     "changing how audit records, reads, redacts or pipelines events",
