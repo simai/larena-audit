@@ -59,7 +59,8 @@ final readonly class AuditHistoryPresenter
                 'id' => 'event-' . (string) ($event['id'] ?? ''),
                 'operation' => $this->operation((string) $event['operation']) . ' · ' . (string) $event['operation_code'],
                 'subject' => $names[(string) $event['subject']] ?? (string) $event['subject'],
-                'actor' => $names[(string) $event['actor']] ?? (string) $event['actor'],
+                'actor' => $this->onBehalfWords((string) $event['actor'], '', $names, is_array($event['detail'] ?? null) ? $event['detail'] : [],
+                    $names[(string) $event['actor']] ?? (string) $event['actor']),
                 'detail' => $this->detail(is_array($event['detail'] ?? null) ? $event['detail'] : []),
                 'time' => (string) $event['occurred_at'],
             ], $events),
@@ -104,7 +105,7 @@ final readonly class AuditHistoryPresenter
                 'key' => (string) ($event['id'] ?? ''),
                 'title' => $object !== '' ? $words.': '.$object : $words,
                 'at' => self::moment((string) ($event['occurred_at'] ?? '')),
-                'actor' => $this->actorWords($actor, $self, $names),
+                'actor' => $this->onBehalfWords($actor, $self, $names, $detail),
                 'actor_key' => $actor,
                 'object' => $object,
                 'object_key' => $object !== '' ? $subject : '',
@@ -129,6 +130,24 @@ final readonly class AuditHistoryPresenter
         }
 
         return $label !== '' ? $this->operation($label) : $type;
+    }
+
+    /**
+     * Who did it, and for an administrator signed in as another person «Админ от имени Имя» (owner decision
+     * 2026-11-18): the real actor the event's payload keeps (AuditOnBehalf), then the person acted as.
+     *
+     * @param array<string, string> $names
+     * @param array<string, mixed> $detail
+     */
+    private function onBehalfWords(string $actor, string $self, array $names, array $detail, ?string $said = null): string
+    {
+        $as = $said ?? $this->actorWords($actor, $self, $names);
+        $real = $detail[\Larena\Audit\Contracts\AuditOnBehalf::FIELD] ?? null;
+        if (!is_string($real) || $real === '' || $real === $actor) {
+            return $as;
+        }
+
+        return $this->text('history.on_behalf', ['real' => $this->actorWords($real, $self, $names), 'as' => $names[$actor] ?? $as]);
     }
 
     /** @param array<string, string> $names */
@@ -170,6 +189,10 @@ final readonly class AuditHistoryPresenter
                 if ($ref !== '') {
                     $refs[$ref] = true;
                 }
+            }
+            $real = is_array($event['detail'] ?? null) ? ($event['detail'][\Larena\Audit\Contracts\AuditOnBehalf::FIELD] ?? null) : null;
+            if (is_string($real) && $real !== '') {
+                $refs[$real] = true;
             }
         }
         $refs = array_keys($refs);
@@ -214,8 +237,9 @@ final readonly class AuditHistoryPresenter
         return $parts === [] ? '—' : implode(' · ', $parts);
     }
 
-    private function text(string $key): string
+    /** @param array<string, string> $replace */
+    private function text(string $key, array $replace = []): string
     {
-        return (string) $this->translator->get('larena-audit::admin.' . $key);
+        return (string) $this->translator->get('larena-audit::admin.' . $key, $replace);
     }
 }

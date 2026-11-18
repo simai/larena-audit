@@ -42,7 +42,9 @@
     "config/larena-audit.php",
     "src/Contracts/AuditReferenceNames.php",
     "tests/Fixtures/Names/PeopleNames.php",
-    "tests/Feature/AuditHistoryEntriesTest.php"
+    "tests/Feature/AuditHistoryEntriesTest.php",
+    "src/Contracts/AuditOnBehalf.php",
+    "src/Sinks/DatabaseAuditSink.php"
   ],
   "forbidden_files": [
     "database/*",
@@ -112,6 +114,8 @@
     "composer.json",
     "src/Http/Controllers/AuditHistoryAdminController.php",
     "src/Providers/AuditServiceProvider.php",
-    "tests/Feature/AuditHistoryEntriesTest.php"
+    "tests/Feature/AuditHistoryEntriesTest.php",
+    "src/Contracts/AuditOnBehalf.php",
+    "src/Sinks/DatabaseAuditSink.php"
   ]
 }

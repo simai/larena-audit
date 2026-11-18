@@ -26,6 +26,7 @@ return [
         'you' => 'Вы',
         'someone' => 'Другой пользователь',
         'system' => 'Система',
+        'on_behalf' => ':real от имени :as',
         'events' => [
             'storage_record_created' => 'Создана запись',
             'storage_record_updated' => 'Изменена запись',
@@ -84,6 +85,10 @@ return [
             'auth_session_revoked' => 'Сеанс завершён',
             'auth_session_revoke_all_denied' => 'Отказано в завершении сеансов',
             'auth_user_updated' => 'Изменён пользователь',
+            'auth_sign_in_as_started' => 'Вход под другим пользователем',
+            'auth_sign_in_as_ended' => 'Возврат к своей учётной записи',
+            'auth_sign_in_as_denied' => 'Отказано во входе под другим пользователем',
+            'auth_sign_in_as_action_denied' => 'Отказано: под другим пользователем это менять нельзя',
             'admin_login_succeeded' => 'Вход в админку',
             'admin_login_failed' => 'Неудачная попытка входа',
         ],

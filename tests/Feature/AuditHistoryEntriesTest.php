@@ -75,6 +75,44 @@ final class AuditHistoryEntriesTest extends TestCase
         self::assertNotSame('user:admin_identity:1', $rejected['actor']);
     }
 
+    /**
+     * An administrator signed in as another person (owner decision 2026-11-18): every event written meanwhile keeps the
+     * person as its actor and the real administrator beside it, and the history says «Админ от имени Имя».
+     */
+    public function testAnActionInSomeoneElsesNameNamesBothPeople(): void
+    {
+        $this->app->setLocale('ru');
+        $sink = new \Larena\Audit\Sinks\DatabaseAuditSink(DB::connection(), new class implements \Larena\Audit\Contracts\AuditOnBehalf {
+            public function realActor(string $actor): ?string
+            {
+                return $actor === 'user:admin_identity:7' ? 'user:admin_identity:1' : null;
+            }
+        });
+        $event = static fn (string $actor): \Larena\Audit\Contracts\AuditEvent => \Larena\Audit\Contracts\AuditEvent::create(
+            sourcePackage: 'larena/storage', category: 'storage_record', type: 'storage.record.updated', actor: $actor,
+            subject: 'storage:record:5', severity: \Larena\Audit\Enums\AuditSeverity::Info,
+            retentionClass: \Larena\Audit\Enums\AuditRetentionClass::Operational, correlationId: 'c-'.$actor,
+            occurredAt: new \DateTimeImmutable('2026-11-18 12:00:00'), payload: ['operation' => 'update'],
+        );
+        $sink->write($event('user:admin_identity:7'));
+        $sink->write($event('user:admin_identity:3'));
+        $payloads = DB::table('larena_audit_events')->orderBy('id')->pluck('payload')->map(static fn (string $payload): array => json_decode($payload, true))->all();
+        self::assertSame('user:admin_identity:1', $payloads[0][\Larena\Audit\Contracts\AuditOnBehalf::FIELD] ?? null);
+        self::assertArrayNotHasKey(\Larena\Audit\Contracts\AuditOnBehalf::FIELD, $payloads[1]);
+
+        $names = new class implements \Larena\Audit\Contracts\AuditReferenceNames {
+            public function names(array $refs): array
+            {
+                return array_intersect_key(['user:admin_identity:1' => 'Главный Админ', 'user:admin_identity:7' => 'Тест Вход'], array_flip($refs));
+            }
+        };
+        $presenter = new AuditHistoryPresenter($this->app->make('translator'), [$names]);
+        $entries = $presenter->entries($this->app->make(AuditHistoryReader::class)->history());
+        self::assertSame('Главный Админ от имени Тест Вход', $entries[1]['actor']);
+        self::assertSame('Вы от имени Тест Вход', $presenter->entries($this->app->make(AuditHistoryReader::class)->history(), 'user:admin_identity:1')[1]['actor']);
+        self::assertSame('Другой пользователь', $entries[0]['actor']);
+    }
+
     public function testEveryHistorySentenceHasBothLanguages(): void
     {
         /** @var array<string, mixed> $ru */

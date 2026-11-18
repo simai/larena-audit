@@ -26,6 +26,7 @@ return [
         'you' => 'You',
         'someone' => 'Another user',
         'system' => 'System',
+        'on_behalf' => ':real as :as',
         'events' => [
             'storage_record_created' => 'Record created',
             'storage_record_updated' => 'Record updated',
@@ -84,6 +85,10 @@ return [
             'auth_session_revoked' => 'Session ended',
             'auth_session_revoke_all_denied' => 'Ending sessions refused',
             'auth_user_updated' => 'User changed',
+            'auth_sign_in_as_started' => 'Signed in as another user',
+            'auth_sign_in_as_ended' => 'Back to their own account',
+            'auth_sign_in_as_denied' => 'Refused to sign in as another user',
+            'auth_sign_in_as_action_denied' => 'Refused: this cannot be changed while signed in as another user',
             'admin_login_succeeded' => 'Signed in',
             'admin_login_failed' => 'Failed sign-in',
         ],

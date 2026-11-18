@@ -145,7 +145,9 @@ final readonly class AuditHistoryReader
     {
         $payload = $this->safePayload((string) $event->payload);
         $detail = [];
-        foreach (['slug', 'status', 'version', 'role', 'operation', 'reason', 'logical_ref', 'display_name', 'mime_type', 'size_bytes', 'visibility', 'purpose', 'owner'] as $key) {
+        foreach (['slug', 'status', 'version', 'role', 'operation', 'reason', 'logical_ref', 'display_name', 'mime_type', 'size_bytes', 'visibility', 'purpose', 'owner',
+            // Who really acted while signed in as the event's actor (larena/audit AuditOnBehalf).
+            \Larena\Audit\Contracts\AuditOnBehalf::FIELD] as $key) {
             $value = $this->allowedString($payload, $key);
             if ($value !== null) { $detail[$key] = $value; }
         }
