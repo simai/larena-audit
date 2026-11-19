@@ -18,9 +18,9 @@ final class AuditHistoryAdminTest extends TestCase
             ->assertSee('data-larena-audit-empty', false);
     }
 
-    public function testNewestPageEventsRenderThroughSafeAllowlist(): void
+    public function testNewestEventsRenderThroughSafeAllowlist(): void
     {
-        $this->insertEvent(1, 'docara_page_created', [
+        $this->insertEvent(1, 'file_uploaded', [
             'slug' => 'welcome',
             'status' => 'draft',
             'version' => '1',
@@ -28,18 +28,18 @@ final class AuditHistoryAdminTest extends TestCase
             'token' => 'do-not-render',
             'unknown' => '<script>unsafe</script>',
         ]);
-        $this->insertEvent(2, 'docara_page_published', [
+        $this->insertEvent(2, 'file_metadata_updated', [
             'slug' => '<welcome>',
             'status' => 'published',
             'version' => 2,
         ]);
-        $this->insertEvent(3, 'docara_page_submitted_for_review', [
-            'operation' => 'submitted_for_review',
+        $this->insertEvent(3, 'file_used', [
+            'operation' => 'used',
             'status' => 'review',
             'body' => 'REVIEW BODY MUST STAY PRIVATE',
         ]);
-        $this->insertEvent(4, 'docara_page_restored', [
-            'operation' => 'restored',
+        $this->insertEvent(4, 'file_deleted', [
+            'operation' => 'deleted',
             'source_revision' => 1,
             'revision' => 6,
             'token' => 'restore-token-must-not-render',
@@ -53,7 +53,7 @@ final class AuditHistoryAdminTest extends TestCase
             // The events reach the admin shell's shared list as a plain description.
             ->assertSee('data-larena-fixture-list="audit-history"', false)
             ->assertSee('data-page-id="page.admin.audit-history"', false)
-            ->assertSeeInOrder(['Restored', 'Submitted for publication', 'Published', 'Created'])
+            ->assertSeeInOrder(['File deleted', 'File used on page', 'File metadata updated', 'File uploaded'])
             ->assertDontSee('larena-audit::admin.operations')
             ->assertSee('<welcome>')
             ->assertSee('user:admin_identity:1')
@@ -128,14 +128,14 @@ final class AuditHistoryAdminTest extends TestCase
         config()->push('larena-audit.reference_names', \Larena\Audit\Tests\Fixtures\Names\PeopleNames::class);
         config()->push('larena-audit.reference_names', 'Larena\\Gone\\RemovedNames');
         config()->push('larena-audit.reference_names', \stdClass::class);
-        $this->insertEvent(1, 'docara_page_created', ['slug' => 'welcome']);
+        $this->insertEvent(1, 'file_uploaded', ['slug' => 'welcome']);
 
         $this->get('/admin/audit')->assertOk()
             ->assertSee('Anna Admin')
             ->assertDontSee('user:admin_identity:1')
             ->assertDontSee('Not on the page')
-            // Nobody names pages here: the subject stays its reference.
-            ->assertSee('docara:page:1');
+            // Nobody names files here: the subject stays its reference.
+            ->assertSee('file:1');
     }
 
     public function testDeclaredEventFamiliesAppearWithTheirOwnLabel(): void
@@ -193,12 +193,12 @@ final class AuditHistoryAdminTest extends TestCase
 
     public function testHistorySurfaceHasRussianTranslationParity(): void
     {
-        $this->insertEvent(1, 'docara_page_submitted_for_review', [
-            'operation' => 'submitted_for_review',
+        $this->insertEvent(1, 'file_used', [
+            'operation' => 'used',
             'status' => 'review',
         ]);
-        $this->insertEvent(2, 'docara_page_restored', [
-            'operation' => 'restored',
+        $this->insertEvent(2, 'file_deleted', [
+            'operation' => 'deleted',
             'source_revision' => 1,
         ]);
         $this->app->setLocale('ru');
@@ -206,8 +206,8 @@ final class AuditHistoryAdminTest extends TestCase
         $this->get('/admin/audit')
             ->assertOk()
             ->assertSee('История действий')
-            ->assertSee('Восстановление версии')
-            ->assertSee('Передано на публикацию')
+            ->assertSee('Файл удалён')
+            ->assertSee('Файл добавлен на страницу')
             ->assertDontSee('larena-audit::admin.operations');
     }
 
@@ -216,8 +216,8 @@ final class AuditHistoryAdminTest extends TestCase
         int $id,
         string $eventType,
         array $payload,
-        string $sourcePackage = 'larena/docara',
-        string $category = 'content_authoring',
+        string $sourcePackage = 'larena/file-manager',
+        string $category = 'file',
     ): void {
         DB::table('larena_audit_events')->insert([
             'id' => $id,
@@ -225,7 +225,7 @@ final class AuditHistoryAdminTest extends TestCase
             'category' => $category,
             'event_type' => $eventType,
             'actor' => 'user:admin_identity:1',
-            'subject' => 'docara:page:1',
+            'subject' => 'file:1',
             'severity' => 'notice',
             'retention_class' => 'operational',
             'correlation_id' => 'correlation-' . $id,

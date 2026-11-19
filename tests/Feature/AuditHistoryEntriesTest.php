@@ -22,11 +22,11 @@ final class AuditHistoryEntriesTest extends TestCase
         $this->insertEvent(2, 'access.operation.denied', ['status' => 'denied'], 'larena/access', 'access');
         $this->insertEvent(3, 'storage.read.record', [], 'larena/storage', 'storage_record');
         $this->insertEvent(4, 'admin_login_succeeded', [], 'larena/auth', 'identity');
-        $this->insertEvent(5, 'docara_page_published', ['slug' => 'welcome']);
+        $this->insertEvent(5, 'file_uploaded', ['display_name' => 'welcome.png']);
         $this->insertEvent(6, 'access.storage.decision', [], 'larena/access', 'access');
 
         $reader = $this->app->make(AuditHistoryReader::class);
-        self::assertSame(['docara_page_published', 'storage.record.created'], array_column($reader->history(), 'operation_code'));
+        self::assertSame(['file_uploaded', 'storage.record.created'], array_column($reader->history(), 'operation_code'));
         self::assertSame(['access.storage.decision', 'admin_login_succeeded', 'access.operation.denied'], array_column($reader->history(true), 'operation_code'));
         self::assertCount(1, $reader->history(false, 1));
         self::assertSame('storage.record.created', $reader->find(1)['operation_code'] ?? null);
@@ -137,8 +137,8 @@ final class AuditHistoryEntriesTest extends TestCase
         int $id,
         string $eventType,
         array $payload,
-        string $sourcePackage = 'larena/docara',
-        string $category = 'content_authoring',
+        string $sourcePackage = 'larena/file-manager',
+        string $category = 'file',
         string $actor = 'user:admin_identity:1',
     ): void {
         DB::table('larena_audit_events')->insert([
@@ -147,7 +147,7 @@ final class AuditHistoryEntriesTest extends TestCase
             'category' => $category,
             'event_type' => $eventType,
             'actor' => $actor,
-            'subject' => 'docara:page:1',
+            'subject' => 'file:1',
             'severity' => 'notice',
             'retention_class' => 'operational',
             'correlation_id' => 'correlation-'.$id,

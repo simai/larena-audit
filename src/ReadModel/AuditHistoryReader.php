@@ -23,42 +23,12 @@ final readonly class AuditHistoryReader
     ) {
     }
 
-    /**
-     * @return list<array{
-     *     id:int,
-     *     operation:string,
-     *     actor:string,
-     *     subject:string,
-     *     slug:string|null,
-     *     status:string|null,
-     *     version:string|null,
-     *     occurred_at:string
-     * }>
-     */
-    public function pageEvents(): array
-    {
-        return $this->connection->table('larena_audit_events')
-            ->where('source_package', 'larena/docara')
-            ->where('category', 'content_authoring')
-            ->orderByDesc('id')
-            ->limit(max(1, min($this->limit, 500)))
-            ->get()
-            ->map(fn (stdClass $event): array => $this->present($event))
-            ->values()
-            ->all();
-    }
-
     /** @return list<array<string, mixed>> */
     public function events(): array
     {
         return $this->connection->table('larena_audit_events')
             ->where(function ($query): void {
-                $query->whereIn('event_type', [
-                    'docara_page_created', 'docara_page_updated', 'docara_page_published',
-                    'docara_page_unpublished', 'docara_page_submitted_for_review',
-                    'docara_page_restored', 'docara_page_update_denied',
-                    'file_uploaded', 'file_metadata_updated', 'file_deleted', 'file_used',
-                ])->orWhere('event_type', 'like', 'auth.%')
+                $query->whereIn('event_type', self::FILE_EVENTS)->orWhere('event_type', 'like', 'auth.%')
                     ->orWhere('event_type', 'like', 'access.%')
                     ->orWhere('event_type', 'like', 'storage.%');
                 foreach ($this->sources as $source) {
@@ -94,7 +64,7 @@ final readonly class AuditHistoryReader
             });
         } else {
             $query->where(function ($query): void {
-                $query->whereIn('event_type', self::PAGE_AND_FILE_EVENTS)
+                $query->whereIn('event_type', self::FILE_EVENTS)
                     ->orWhereRaw('substr(event_type, 1, 8) = ?', ['storage.']);
                 foreach ($this->sources as $source) {
                     $query->orWhereRaw('substr(event_type, 1, ?) = ?', [strlen($source['prefix']), $source['prefix']]);
@@ -133,12 +103,7 @@ final readonly class AuditHistoryReader
         return false;
     }
 
-    private const array PAGE_AND_FILE_EVENTS = [
-        'docara_page_created', 'docara_page_updated', 'docara_page_published',
-        'docara_page_unpublished', 'docara_page_submitted_for_review',
-        'docara_page_restored', 'docara_page_update_denied',
-        'file_uploaded', 'file_metadata_updated', 'file_deleted', 'file_used',
-    ];
+    private const array FILE_EVENTS = ['file_uploaded', 'file_metadata_updated', 'file_deleted', 'file_used'];
 
     /** @return array<string, mixed> */
     private function presentGeneric(stdClass $event): array
@@ -159,28 +124,6 @@ final readonly class AuditHistoryReader
             'words' => $this->wordsKey((string) $event->event_type),
             'operation_code' => (string) $event->event_type, 'actor' => (string) $event->actor,
             'subject' => (string) $event->subject, 'detail' => $detail,
-            'occurred_at' => (string) $event->occurred_at,
-        ];
-    }
-
-    /**
-     * The persistent payload is deliberately projected through an allowlist.
-     * Raw payload, content body and unknown fields never reach the view.
-     *
-     * @return array{id:int,operation:string,actor:string,subject:string,slug:string|null,status:string|null,version:string|null,occurred_at:string}
-     */
-    private function present(stdClass $event): array
-    {
-        $payload = $this->safePayload((string) $event->payload);
-
-        return [
-            'id' => (int) $event->id,
-            'operation' => $this->operationLabel((string) $event->event_type),
-            'actor' => (string) $event->actor,
-            'subject' => (string) $event->subject,
-            'slug' => $this->allowedString($payload, 'slug'),
-            'status' => $this->allowedString($payload, 'status'),
-            'version' => $this->allowedString($payload, 'version'),
             'occurred_at' => (string) $event->occurred_at,
         ];
     }
@@ -226,13 +169,6 @@ final readonly class AuditHistoryReader
         }
 
         return match ($eventType) {
-            'docara_page_created' => 'Created',
-            'docara_page_updated' => 'Updated',
-            'docara_page_published' => 'Published',
-            'docara_page_unpublished' => 'Unpublished',
-            'docara_page_submitted_for_review' => 'Submitted for publication',
-            'docara_page_restored' => 'Restored',
-            'docara_page_update_denied' => 'Permission denied',
             'file_uploaded' => 'File uploaded',
             'file_metadata_updated' => 'File metadata updated',
             'file_deleted' => 'File deleted',
