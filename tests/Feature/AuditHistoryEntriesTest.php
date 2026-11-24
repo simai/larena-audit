@@ -113,6 +113,21 @@ final class AuditHistoryEntriesTest extends TestCase
         self::assertSame('Другой пользователь', $entries[0]['actor']);
     }
 
+    public function testARefusedRequestIsNotShownAsDone(): void
+    {
+        $presenter = $this->app->make(AuditHistoryPresenter::class);
+        $event = static fn (int $id, array $detail): array => ['id' => $id, 'type' => 'core.operation.decided', 'actor' => 'system',
+            'subject' => '', 'detail' => $detail, 'occurred_at' => '2026-11-24 12:00:00'];
+        $outcomes = array_column($presenter->entries([
+            $event(1, ['status' => 'invalid']),
+            $event(2, ['status' => 'capability_locked']),
+            $event(3, ['status' => 'denied']),
+            $event(4, ['status' => 'allowed']),
+        ]), 'outcome', 'key');
+
+        self::assertSame(['1' => 'failed', '2' => 'denied', '3' => 'denied', '4' => 'done'], $outcomes);
+    }
+
     public function testEveryHistorySentenceHasBothLanguages(): void
     {
         /** @var array<string, mixed> $ru */

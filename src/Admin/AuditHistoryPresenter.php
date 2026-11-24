@@ -87,8 +87,11 @@ final readonly class AuditHistoryPresenter
             $detail = is_array($event['detail'] ?? null) ? $event['detail'] : [];
             $object = $subject !== $actor ? ($names[$subject] ?? '') : '';
             $words = $this->words($type, is_string($event['words'] ?? null) ? $event['words'] : null, (string) ($event['operation'] ?? ''));
-            $denied = str_ends_with($type, '.denied') || str_ends_with($type, '_denied') || ($detail['status'] ?? null) === 'denied';
-            $failed = str_ends_with($type, '_failed') || str_ends_with($type, '.failed') || str_ends_with($type, '.rejected') || str_ends_with($type, '_rejected');
+            $status = $detail['status'] ?? null;
+            $denied = str_ends_with($type, '.denied') || str_ends_with($type, '_denied') || in_array($status, ['denied', 'capability_locked'], true);
+            // A refused request (Core's `invalid` decision) did not happen: it is not a success.
+            $failed = str_ends_with($type, '_failed') || str_ends_with($type, '.failed') || str_ends_with($type, '.rejected') || str_ends_with($type, '_rejected')
+                || in_array($status, ['invalid', 'failed', 'rejected'], true);
             $details = [[$this->text('history.code'), $type]];
             if ($subject !== '') {
                 $details[] = [$this->text('history.subject'), $subject];
