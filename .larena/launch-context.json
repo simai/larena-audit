@@ -45,7 +45,8 @@
     "tests/Feature/AuditHistoryEntriesTest.php",
     "src/Contracts/AuditOnBehalf.php",
     "src/Sinks/DatabaseAuditSink.php",
-    "resources/lang/ru/operations.php"
+    "resources/lang/ru/operations.php",
+    "scripts/check-delivery-manifest.php"
   ],
   "forbidden_files": [
     "database/*",
